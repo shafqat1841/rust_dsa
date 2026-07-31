@@ -1,0 +1,15 @@
+{
+    "name": "Rust Development",
+    "image": "mcr.microsoft.com/devcontainers/rust:1",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "rust-lang.rust-analyzer",
+                "vadimcn.vscode-lldb",
+                "dustypomerleau.rust-syntax",
+                "fill-labs.dependi"
+            ]
+        }
+    },
+    "postCreateCommand": "cargo check"
+}
