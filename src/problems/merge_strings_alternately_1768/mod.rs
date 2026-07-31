@@ -1,5 +1,9 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+struct Solution;
+
+impl Solution {
+    pub fn merge_alternately(word1: String, word2: String) -> String {
+        "".to_string()
+    }
 }
 
 #[cfg(test)]
@@ -8,7 +12,7 @@ mod merge_strings_alternately_1768_test {
 
     #[test]
     fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+       let result = Solution::merge_alternately( "".to_string(), "".to_string());
+        assert_eq!(result, "");
     }
 }
