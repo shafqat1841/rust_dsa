@@ -3,49 +3,39 @@ struct Solution;
 
 impl Solution {
     pub fn gcd_of_strings(str1: String, str2: String) -> String {
+        let len1 = str1.len();
+        let len2 = str2.len();
 
-        let str1_bytes = str1.into_bytes();
-        let str2_bytes = str2.into_bytes();
+        let hcf = calculate_hcf(len1, len2);
 
-        let mut res = Vec::<u8>::new();
+        println!("hcf: {}", hcf);
 
-        let mut p1 = 0;
-        let mut p2 = 0;
+        let mut o = str2;
 
-        loop {
-            let char1 = str1_bytes.get(p1); 
-            let char2 = str2_bytes.get(p2); 
-
-            p1 += 1;
-            p2 += 1;
-
-            let char1 = match char1 {
-                Some(v) => v,
-                None => break
-            };
-
-            let char2 = match char2 {
-                Some(v) => v,
-                None => break
-            };
-
-            if char1 == char2 {
-                res.push(*char1);
-            }
+        if len1 < len2 {
+            o = str1
         }
 
+        let o_bytes = o.into_bytes();
 
+        let res_bytes = &o_bytes[..hcf];
 
+        let res = match String::from_utf8(res_bytes.to_vec()) {
+            Ok(str_slice) => str_slice,
+            Err(e) => "".to_string(),
+        };
 
-
-
-
-
-        match String::from_utf8(res){
-            Ok(v) => v,
-            Err(e) => e.to_string()
-        }
+        res
     }
+}
+
+fn calculate_hcf(mut a: usize, mut b: usize) -> usize {
+    while b != 0 {
+        let temp = b;
+        b = a % b;
+        a = temp;
+    }
+    a
 }
 
 #[cfg(test)]
