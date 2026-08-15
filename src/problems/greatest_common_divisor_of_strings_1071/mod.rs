@@ -3,29 +3,69 @@ struct Solution;
 
 impl Solution {
     pub fn gcd_of_strings(str1: String, str2: String) -> String {
-        let len1 = str1.len();
-        let len2 = str2.len();
+        
+        let str1_bytes = str1.as_bytes();
+        let str2_bytes = str2.as_bytes();
+        
+        let str1_len = str1_bytes.len();
+        let str2_len = str2_bytes.len();
 
-        let hcf = calculate_hcf(len1, len2);
+        let hcf = calculate_hcf(str1_len, str2_len);
 
-        println!("hcf: {}", hcf);
-
-        let mut o = str2;
-
-        if len1 < len2 {
-            o = str1
+        let res_bytes = &str2_bytes[..hcf];
+        let mut longer_length = str2_len;
+        
+        if str1_len > str2_len {
+            longer_length = str1_len;
         }
 
-        let o_bytes = o.into_bytes();
 
-        let res_bytes = &o_bytes[..hcf];
+        let mut run = 0;
+        let mut all_match = true;
 
-        let res = match String::from_utf8(res_bytes.to_vec()) {
-            Ok(str_slice) => str_slice,
-            Err(e) => "".to_string(),
-        };
 
-        res
+        loop {
+            let start = run;
+            let end = run + hcf;
+            
+            if run < str1_len {
+                let str1_com = &str1_bytes[start..end];
+                let com1 = *str1_com == *res_bytes;
+                
+                if !com1 {
+                    all_match = false;
+                    break;
+                }
+            }
+            
+            if run < str2_len {
+                let str2_com = &str2_bytes[start..end];
+                let com2 = *str2_com == *res_bytes;
+                if !com2 {
+                    all_match = false;
+                    break;
+                }
+            }
+            
+            if  run >= longer_length {
+                break;
+            }
+
+            run += hcf;
+
+        }
+
+
+        if !all_match {
+            "".to_string()
+        } else {
+            let res = match String::from_utf8(res_bytes.to_vec()) {
+                Ok(str_slice) => str_slice,
+                Err(e) => e.to_string(),
+            };
+
+            res
+        }
     }
 }
 
