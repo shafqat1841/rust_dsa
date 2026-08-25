@@ -2,6 +2,42 @@ struct solution;
 
 impl solution {
     fn sort(arr: &mut [i32]) -> &[i32] {
+        for i in 1..arr.len() {
+            let ele_i = arr[i];
+            let mut j = i;
+
+            while j > 0 && arr[j - 1] > ele_i {
+                arr[j] = arr[j - 1];
+                j -= 1;
+            }
+
+            arr[j] = ele_i;
+        }
+
+        arr
+    }
+    fn sort_code_two(arr: &mut [i32]) -> &[i32] {
+        let mut i = 1;
+        while i < arr.len() as isize {
+            let mut j = i - 1;
+            let ele_i = arr[i as usize];
+
+            while j > -1 && arr[j as usize] > ele_i {
+                let index = j + 1;
+                arr[index as usize] = arr[j as usize];
+
+                j -= 1;
+            }
+
+            let index = j + 1;
+            arr[index as usize] = ele_i;
+
+            i += 1;
+        }
+
+        arr
+    }
+    fn sort_code_one(arr: &mut [i32]) -> &[i32] {
         let mut i = 1;
 
         while i < arr.len() {
