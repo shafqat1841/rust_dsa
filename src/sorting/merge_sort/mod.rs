@@ -1,4 +1,4 @@
-struct solution;
+struct Solution;
 
 fn merge_arr(arr1: Vec<i32>, arr2: Vec<i32>) -> Vec<i32> {
     let mut sorted_arr = Vec::<i32>::new();
@@ -25,7 +25,7 @@ fn merge_arr(arr1: Vec<i32>, arr2: Vec<i32>) -> Vec<i32> {
 
     if j < arr2.len() {
         while j < arr2.len() {
-            sorted_arr.push(arr1[j]);
+            sorted_arr.push(arr2[j]);
             j += 1;
         }
     }
@@ -51,7 +51,7 @@ fn merge_sort(arr: Vec<i32>) -> Vec<i32> {
     sorted_arr
 }
 
-impl solution {
+impl Solution {
     fn sort(arr: Vec<i32>) -> Vec<i32> {
         merge_sort(arr)
     }
@@ -65,7 +65,7 @@ mod merge_sort_test {
     fn check_solution() {
         let unsorted_arr = [30, 27, 25, 20, 18, 17, 10, 5];
         let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
-        let sorted_arr = solution::sort(unsorted_arr.to_vec());
+        let sorted_arr = Solution::sort(unsorted_arr.to_vec());
         assert_eq!(sorted_arr, sorted_arr_res);
     }
 
@@ -73,7 +73,7 @@ mod merge_sort_test {
     fn check_solution_2() {
         let unsorted_arr = [27, 25, 20, 18, 17, 10, 5];
         let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27];
-        let sorted_arr = solution::sort(unsorted_arr.to_vec());
+        let sorted_arr = Solution::sort(unsorted_arr.to_vec());
         assert_eq!(sorted_arr, sorted_arr_res);
     }
 
@@ -81,7 +81,7 @@ mod merge_sort_test {
     fn check_solution_3() {
         let unsorted_arr = [30, 27, 18, 17, 10, 5, 25, 20];
         let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
-        let sorted_arr = solution::sort(unsorted_arr.to_vec());
+        let sorted_arr = Solution::sort(unsorted_arr.to_vec());
         assert_eq!(sorted_arr, sorted_arr_res);
     }
 
@@ -89,7 +89,7 @@ mod merge_sort_test {
     fn check_solution_4() {
         let unsorted_arr = [5, 10, 17, 18, 30, 27, 25, 20];
         let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
-        let sorted_arr = solution::sort(unsorted_arr.to_vec());
+        let sorted_arr = Solution::sort(unsorted_arr.to_vec());
         assert_eq!(sorted_arr, sorted_arr_res);
     }
 
@@ -97,7 +97,7 @@ mod merge_sort_test {
     fn check_solution_5() {
         let unsorted_arr = [27, 25, 17, 10, 5, 20, 18];
         let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27];
-        let sorted_arr = solution::sort(unsorted_arr.to_vec());
+        let sorted_arr = Solution::sort(unsorted_arr.to_vec());
         assert_eq!(sorted_arr, sorted_arr_res);
     }
 
@@ -105,7 +105,7 @@ mod merge_sort_test {
     fn check_solution_6() {
         let unsorted_arr = [17, 10, 5, 27, 25, 20, 18];
         let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27];
-        let sorted_arr = solution::sort(unsorted_arr.to_vec());
+        let sorted_arr = Solution::sort(unsorted_arr.to_vec());
         assert_eq!(sorted_arr, sorted_arr_res);
     }
 
@@ -113,7 +113,7 @@ mod merge_sort_test {
     fn check_solution_7() {
         let unsorted_arr = [5, 10, 17, 27, 25, 20, 18];
         let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27];
-        let sorted_arr = solution::sort(unsorted_arr.to_vec());
+        let sorted_arr = Solution::sort(unsorted_arr.to_vec());
         assert_eq!(sorted_arr, sorted_arr_res);
     }
 }
