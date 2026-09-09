@@ -1,6 +1,7 @@
 struct Solution;
 
-fn partition(mut arr: [i32; 8], low: usize, high: usize) -> usize {
+fn partition(arr: &mut [i32], low: usize, high: usize) -> usize {
+    println!("arr: {:?}", arr);
     let pivot_value = arr[low];
     let mut left_low = low;
 
@@ -15,27 +16,26 @@ fn partition(mut arr: [i32; 8], low: usize, high: usize) -> usize {
     }
 
     arr[left_low] = pivot_value;
+    println!("arr: {:?}", arr);
 
+    println!("left_low: {:?}", left_low);
     left_low
 }
 
-fn quick_sort(arr: [i32; 8], low: usize, high: usize) -> [i32; 8] {
-    println!("arr: {:?}", low);
-    println!("arr: {:?}", high);
+fn quick_sort(arr: &mut [i32], low: usize, high: usize) -> &mut [i32] {
 
     if low < high {
         let pivot = partition(arr, low, high);
-        quick_sort(arr, low, pivot);
-        quick_sort(arr, pivot + 1, high);
+        quick_sort(&mut arr[low..pivot], low, pivot);
+        quick_sort(&mut arr[pivot+1..high], pivot + 1, high);
     }
 
-    println!("arr: {:?}", arr);
 
     arr
 }
 
 impl Solution {
-    fn sort(arr: [i32; 8]) -> [i32; 8] {
+    fn sort(arr: &mut [i32]) -> &mut [i32] {
         let low: usize = 0;
         let high: usize = arr.len();
 
@@ -49,9 +49,9 @@ mod quick_sort_test {
 
     #[test]
     fn check_solution() {
-        let unsorted_arr = [30, 27, 25, 20, 18, 17, 10, 5];
+        let mut unsorted_arr = [30, 27, 25, 20, 18, 17, 10, 5];
         let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
-        let sorted_arr = Solution::sort(unsorted_arr);
+        let sorted_arr = Solution::sort(&mut unsorted_arr);
         assert_eq!(sorted_arr, sorted_arr_res);
     }
 
