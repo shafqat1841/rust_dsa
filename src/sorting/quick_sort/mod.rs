@@ -32,7 +32,7 @@ fn quick_sort(arr: &mut [i32]) {
 
     if low < high {
         let pivot = partition(arr, low, high);
-        println!("pivot: {:?}", pivot);
+        // println!("pivot: {:?}", pivot);
         quick_sort(&mut arr[low..pivot]);
         quick_sort(&mut arr[pivot + 1..high]);
     }
