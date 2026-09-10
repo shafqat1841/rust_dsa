@@ -45,9 +45,9 @@ impl Solution {
         }
 
         let low: usize = 0;
-        let high: usize = arr.len();
+        let high: usize = arr.len() - 1;
 
-        let mid = (high - 1) / 2;
+        let mid = (high) / 2;
 
         if arr[low] > arr[mid] {
             let temp = arr[low];
@@ -55,16 +55,16 @@ impl Solution {
             arr[mid] = temp;
         }
 
-        if arr[low] > arr[high - 1] {
+        if arr[low] > arr[high] {
             let temp = arr[low];
-            arr[low] = arr[high - 1];
-            arr[high - 1] = temp;
+            arr[low] = arr[high];
+            arr[high] = temp;
         }
 
-        if arr[mid] > arr[high - 1] {
+        if arr[mid] > arr[high] {
             let temp = arr[mid];
-            arr[mid] = arr[high - 1];
-            arr[high - 1] = temp;
+            arr[mid] = arr[high];
+            arr[high] = temp;
         }
 
         let temp = arr[low];
