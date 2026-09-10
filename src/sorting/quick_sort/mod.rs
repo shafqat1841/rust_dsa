@@ -1,12 +1,10 @@
 struct Solution;
 
-fn partition(arr: &mut [i32], low: usize, high: usize) -> usize {
-    // println!("arr 1: {:?}", arr);
-    let pivot_value = arr[low];
-    let mut left_low = low + 1;
+fn partition(arr: &mut [i32]) -> usize {
+    let pivot_value = arr[0];
+    let mut left_low = 1;
 
-    for i in low + 1..high {
-        // println!("arr loop: {:?}", arr);
+    for i in 1..arr.len() {
         if arr[i] < pivot_value {
             let temp = arr[i];
             arr[i] = arr[left_low];
@@ -16,25 +14,21 @@ fn partition(arr: &mut [i32], low: usize, high: usize) -> usize {
         }
     }
 
-    // println!("arr 1.5: {:?}", arr);
     let temp_left_low = arr[left_low - 1];
     arr[left_low - 1] = pivot_value;
     arr[0] = temp_left_low;
-
-    // println!("arr 2: {:?}", arr);
 
     left_low - 1
 }
 
 fn quick_sort(arr: &mut [i32]) {
-    let low: usize = 0;
-    let high: usize = arr.len();
 
-    if low < high {
-        let pivot = partition(arr, low, high);
-        // println!("pivot: {:?}", pivot);
-        quick_sort(&mut arr[low..pivot]);
-        quick_sort(&mut arr[pivot + 1..high]);
+    let lenght = arr.len();
+
+    if lenght > 0 {
+        let pivot = partition(arr);
+        quick_sort(&mut arr[0..pivot]);
+        quick_sort(&mut arr[pivot + 1..lenght]);
     }
 }
 
