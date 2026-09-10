@@ -40,6 +40,10 @@ fn quick_sort(arr: &mut [i32]) {
 
 impl Solution {
     fn sort(arr: &mut [i32]) {
+        if arr.len() == 0 {
+            return;
+        }
+
         let low: usize = 0;
         let high: usize = arr.len();
 
@@ -135,6 +139,22 @@ mod quick_sort_test {
     fn test_8() {
         let mut unsorted_arr = [20, 10, 17, 30, 27, 25, 5, 18];
         let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
+        Solution::sort(&mut unsorted_arr);
+        assert_eq!(unsorted_arr, sorted_arr_res);
+    }
+
+    #[test]
+    fn test_9() {
+        let mut unsorted_arr = [];
+        let sorted_arr_res = [];
+        Solution::sort(&mut unsorted_arr);
+        assert_eq!(unsorted_arr, sorted_arr_res);
+    }
+
+    #[test]
+    fn test_10() {
+        let mut unsorted_arr = [20];
+        let sorted_arr_res = [20];
         Solution::sort(&mut unsorted_arr);
         assert_eq!(unsorted_arr, sorted_arr_res);
     }
