@@ -4,7 +4,6 @@ fn swap(arr: &mut [i32], low: usize, high: usize) {
     arr[high] = temp;
 }
 fn partition(arr: &mut [i32]) -> usize {
-    println!("arr 1: {:?}", arr);
 
     let pivot = arr[0];
     let mut low = 1;
@@ -14,29 +13,15 @@ fn partition(arr: &mut [i32]) -> usize {
         if low >= high {
             break;
         }
-        // loop {
-        //     // println!("low: {:?}",low);
-        //     if arr[low] > pivot || low >= high {
-        //         break;
-        //     }
-        //     low += 1;
-        // }
-
-        for item in &*arr {
-            if *item > pivot {
+        loop {
+            if arr[low] > pivot || low >= high {
                 break;
             }
             low += 1;
         }
 
-        // loop {
-        //     if arr[high] <= pivot ||  high <= 0 {
-        //         break;
-        //     }
-        //     high -= 1;
-        // }
-          for item in &*arr {
-            if *item <= pivot {
+        loop {
+            if arr[high] <= pivot ||  high <= 0 {
                 break;
             }
             high -= 1;
@@ -51,13 +36,9 @@ fn partition(arr: &mut [i32]) -> usize {
         }
     }
 
-    println!("arr 1.5: {:?}", arr);
-
     if arr[0] > arr[high] {
         swap(arr, 0, high);
     }
-
-    println!("arr 2: {:?}", arr);
 
     high
 }
@@ -67,7 +48,7 @@ pub fn quick_sort(arr: &mut [i32]) {
 
     if length != 0 {
         let pivot_index = partition(arr);
-        // quick_sort(&mut arr[0..pivot_index]);
-        // quick_sort(&mut arr[pivot_index + 1..length]);
+        quick_sort(&mut arr[0..pivot_index]);
+        quick_sort(&mut arr[pivot_index + 1..length]);
     }
 }
