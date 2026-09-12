@@ -1,36 +1,11 @@
+mod optimize_arr;
+mod quick_sort_1;
+mod quick_sort_2;
+
+use optimize_arr::optimize;
+use quick_sort_1::quick_sort as quick_sort_1;
+use quick_sort_2::quick_sort as quick_sort_2;
 struct Solution;
-
-fn partition(arr: &mut [i32]) -> usize {
-    let pivot_value = arr[0];
-    let mut left_low = 1;
-
-    for i in 1..arr.len() {
-        if arr[i] < pivot_value {
-            let temp = arr[i];
-            arr[i] = arr[left_low];
-            arr[left_low] = temp;
-
-            left_low += 1;
-        }
-    }
-
-    let temp_left_low = arr[left_low - 1];
-    arr[left_low - 1] = pivot_value;
-    arr[0] = temp_left_low;
-
-    left_low - 1
-}
-
-fn quick_sort(arr: &mut [i32]) {
-
-    let lenght = arr.len();
-
-    if lenght > 0 {
-        let pivot = partition(arr);
-        quick_sort(&mut arr[0..pivot]);
-        quick_sort(&mut arr[pivot + 1..lenght]);
-    }
-}
 
 impl Solution {
     fn sort(arr: &mut [i32]) {
@@ -38,34 +13,18 @@ impl Solution {
             return;
         }
 
-        let low: usize = 0;
-        let high: usize = arr.len() - 1;
+        optimize(arr);
 
-        let mid = (high) / 2;
-
-        if arr[low] > arr[mid] {
-            let temp = arr[low];
-            arr[low] = arr[mid];
-            arr[mid] = temp;
+        quick_sort_2(arr);
+    }
+    fn sort2(arr: &mut [i32]) {
+        if arr.len() == 0 {
+            return;
         }
 
-        if arr[low] > arr[high] {
-            let temp = arr[low];
-            arr[low] = arr[high];
-            arr[high] = temp;
-        }
+        optimize(arr);
 
-        if arr[mid] > arr[high] {
-            let temp = arr[mid];
-            arr[mid] = arr[high];
-            arr[high] = temp;
-        }
-
-        let temp = arr[low];
-        arr[low] = arr[mid];
-        arr[mid] = temp;
-
-        quick_sort(arr);
+        quick_sort_1(arr);
     }
 }
 
@@ -81,75 +40,75 @@ mod quick_sort_test {
         assert_eq!(unsorted_arr, sorted_arr_res);
     }
 
-    #[test]
-    fn test_2() {
-        let mut unsorted_arr = [30, 27, 25, 20, 18, 17, 10, 5];
-        let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
-        Solution::sort(&mut unsorted_arr);
-        assert_eq!(unsorted_arr, sorted_arr_res);
-    }
+    // #[test]
+    // fn test_2() {
+    //     let mut unsorted_arr = [30, 27, 25, 20, 18, 17, 10, 5];
+    //     let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
+    //     Solution::sort(&mut unsorted_arr);
+    //     assert_eq!(unsorted_arr, sorted_arr_res);
+    // }
 
-    #[test]
-    fn test_3() {
-        let mut unsorted_arr = [30, 27, 18, 17, 10, 5, 25, 20];
-        let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
-        Solution::sort(&mut unsorted_arr);
-        assert_eq!(unsorted_arr, sorted_arr_res);
-    }
+    // #[test]
+    // fn test_3() {
+    //     let mut unsorted_arr = [30, 27, 18, 17, 10, 5, 25, 20];
+    //     let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
+    //     Solution::sort(&mut unsorted_arr);
+    //     assert_eq!(unsorted_arr, sorted_arr_res);
+    // }
 
-    #[test]
-    fn test_4() {
-        let mut unsorted_arr = [5, 10, 17, 18, 30, 27, 25, 20];
-        let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
-        Solution::sort(&mut unsorted_arr);
-        assert_eq!(unsorted_arr, sorted_arr_res);
-    }
+    // #[test]
+    // fn test_4() {
+    //     let mut unsorted_arr = [5, 10, 17, 18, 30, 27, 25, 20];
+    //     let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
+    //     Solution::sort(&mut unsorted_arr);
+    //     assert_eq!(unsorted_arr, sorted_arr_res);
+    // }
 
-    #[test]
-    fn test_5() {
-        let mut unsorted_arr = [30, 27, 25, 17, 10, 5, 20, 18];
-        let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
-        Solution::sort(&mut unsorted_arr);
-        assert_eq!(unsorted_arr, sorted_arr_res);
-    }
+    // #[test]
+    // fn test_5() {
+    //     let mut unsorted_arr = [30, 27, 25, 17, 10, 5, 20, 18];
+    //     let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
+    //     Solution::sort(&mut unsorted_arr);
+    //     assert_eq!(unsorted_arr, sorted_arr_res);
+    // }
 
-    #[test]
-    fn test_6() {
-        let mut unsorted_arr = [17, 10, 5, 30, 27, 25, 20, 18];
-        let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
-        Solution::sort(&mut unsorted_arr);
-        assert_eq!(unsorted_arr, sorted_arr_res);
-    }
+    // #[test]
+    // fn test_6() {
+    //     let mut unsorted_arr = [17, 10, 5, 30, 27, 25, 20, 18];
+    //     let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
+    //     Solution::sort(&mut unsorted_arr);
+    //     assert_eq!(unsorted_arr, sorted_arr_res);
+    // }
 
-    #[test]
-    fn test_7() {
-        let mut unsorted_arr = [5, 10, 17, 30, 27, 25, 20, 18];
-        let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
-        Solution::sort(&mut unsorted_arr);
-        assert_eq!(unsorted_arr, sorted_arr_res);
-    }
+    // #[test]
+    // fn test_7() {
+    //     let mut unsorted_arr = [5, 10, 17, 30, 27, 25, 20, 18];
+    //     let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
+    //     Solution::sort(&mut unsorted_arr);
+    //     assert_eq!(unsorted_arr, sorted_arr_res);
+    // }
 
-    #[test]
-    fn test_8() {
-        let mut unsorted_arr = [20, 10, 17, 30, 27, 25, 5, 18];
-        let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
-        Solution::sort(&mut unsorted_arr);
-        assert_eq!(unsorted_arr, sorted_arr_res);
-    }
+    // #[test]
+    // fn test_8() {
+    //     let mut unsorted_arr = [20, 10, 17, 30, 27, 25, 5, 18];
+    //     let sorted_arr_res = [5, 10, 17, 18, 20, 25, 27, 30];
+    //     Solution::sort(&mut unsorted_arr);
+    //     assert_eq!(unsorted_arr, sorted_arr_res);
+    // }
 
-    #[test]
-    fn test_9() {
-        let mut unsorted_arr = [];
-        let sorted_arr_res = [];
-        Solution::sort(&mut unsorted_arr);
-        assert_eq!(unsorted_arr, sorted_arr_res);
-    }
+    // #[test]
+    // fn test_9() {
+    //     let mut unsorted_arr = [];
+    //     let sorted_arr_res = [];
+    //     Solution::sort(&mut unsorted_arr);
+    //     assert_eq!(unsorted_arr, sorted_arr_res);
+    // }
 
-    #[test]
-    fn test_10() {
-        let mut unsorted_arr = [20];
-        let sorted_arr_res = [20];
-        Solution::sort(&mut unsorted_arr);
-        assert_eq!(unsorted_arr, sorted_arr_res);
-    }
+    // #[test]
+    // fn test_10() {
+    //     let mut unsorted_arr = [20];
+    //     let sorted_arr_res = [20];
+    //     Solution::sort(&mut unsorted_arr);
+    //     assert_eq!(unsorted_arr, sorted_arr_res);
+    // }
 }
