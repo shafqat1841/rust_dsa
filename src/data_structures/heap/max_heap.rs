@@ -1,4 +1,4 @@
-fn swap(arr: &mut [i32], left: usize, right: usize) {
+fn swap(arr: &mut Vec<i32>, left: usize, right: usize) {
     let temp = arr[left];
     arr[left] = arr[right];
     arr[right] = temp;
@@ -24,7 +24,7 @@ fn get_heigh_of_tree(length: usize) -> u32 {
     length.ilog2()
 }
 
-fn sift_down(arr: &mut [i32], mut index: usize) {
+fn sift_down(arr: &mut Vec<i32>, mut index: usize) {
     println!("arr: {:?}", arr);
     let len = arr.len();
 
@@ -50,7 +50,7 @@ fn sift_down(arr: &mut [i32], mut index: usize) {
     }
 }
 
-pub fn build_max_heap(arr: &mut [i32]) {
+pub fn build_max_heap(arr: &mut Vec<i32>) {
     if arr.len() <= 1 {
         return;
     }
@@ -67,8 +67,24 @@ pub fn build_max_heap(arr: &mut [i32]) {
 struct solution;
 
 impl solution {
-    fn create(arr: &mut [i32]) {
+    fn create(arr: &mut Vec<i32>) {
         build_max_heap(arr);
+    }
+
+    fn insert(arr: &mut Vec<i32>, number: i32) {
+        arr.push(number);
+
+        let mut last_ele_i = arr.len() - 1;
+
+        loop {
+            let parent_i = get_parent(last_ele_i);
+            if arr[last_ele_i] > arr[parent_i] {
+                swap(arr, parent_i, last_ele_i);
+                last_ele_i = parent_i
+            } else {
+                break;
+            }
+        }
     }
 }
 
@@ -78,10 +94,43 @@ mod max_heap_test {
 
     #[test]
     fn create_data_structure() {
-        let mut array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        let mut array = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         let result_array = [10, 9, 7, 8, 5, 6, 3, 1, 4, 2];
         solution::create(&mut array);
 
-        assert_eq!(array,result_array);
+        assert_eq!(array, result_array);
+    }
+    
+    #[test]
+    fn insert_largest_ele() {
+        let mut array = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        let result_array = [20, 10, 7, 8, 9, 6, 3, 1, 4, 2, 5];
+        solution::create(&mut array);
+        solution::insert(&mut array, 20);
+        
+        // println!("array: {:?}", array);
+        assert_eq!(array, result_array);
+    }
+    
+    #[test]
+    fn insert_smallest_ele(){
+           let mut array = vec![2, 3, 4, 5, 6, 7, 8, 9, 10];
+        let result_array = [10, 9, 8, 5, 6, 7, 4, 3, 2, 1];
+        solution::create(&mut array);
+        solution::insert(&mut array, 1);
+        
+        // println!("array: {:?}", array);
+        assert_eq!(array, result_array);
+    }
+
+        #[test]
+    fn insert_mid_ele(){
+           let mut array = vec![1, 2, 3, 4, 6, 7, 8, 9, 10];
+        let result_array = [10, 9, 8, 4, 6, 7, 3, 2, 1, 5];
+        solution::create(&mut array);
+        solution::insert(&mut array, 5);
+        
+        // println!("array: {:?}", array);
+        assert_eq!(array, result_array);
     }
 }
