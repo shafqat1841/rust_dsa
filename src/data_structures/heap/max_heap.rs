@@ -1,7 +1,7 @@
-fn swap(arr: &mut Vec<i32>, left: usize, right: usize) {
-    let temp = arr[left];
-    arr[left] = arr[right];
-    arr[right] = temp;
+use std::fmt::Debug;
+
+fn swap<T: Debug + Ord>(arr: &mut Vec<T>, left: usize, right: usize) {
+    arr.swap(left, right);
 }
 
 fn get_left_child(index: usize) -> usize {
@@ -24,7 +24,7 @@ fn get_heigh_of_tree(length: usize) -> u32 {
     length.ilog2()
 }
 
-fn sift_down(arr: &mut Vec<i32>, mut index: usize) {
+fn sift_down<T: Debug + Ord>(arr: &mut Vec<T>, mut index: usize) {
     println!("arr: {:?}", arr);
     let len = arr.len();
 
@@ -42,7 +42,7 @@ fn sift_down(arr: &mut Vec<i32>, mut index: usize) {
         }
 
         if largest != index {
-            arr.swap(index, largest);
+            swap(arr, index, largest);
             index = largest;
         } else {
             break;
@@ -50,7 +50,7 @@ fn sift_down(arr: &mut Vec<i32>, mut index: usize) {
     }
 }
 
-pub fn build_max_heap(arr: &mut Vec<i32>) {
+pub fn build_max_heap<T: Debug + Ord>(arr: &mut Vec<T>) {
     if arr.len() <= 1 {
         return;
     }
@@ -67,11 +67,11 @@ pub fn build_max_heap(arr: &mut Vec<i32>) {
 struct solution;
 
 impl solution {
-    fn create(arr: &mut Vec<i32>) {
+    fn create<T: Debug + Ord>(arr: &mut Vec<T>) {
         build_max_heap(arr);
     }
 
-    fn insert(arr: &mut Vec<i32>, number: i32) {
+    fn insert<T: Debug + Ord>(arr: &mut Vec<T>, number: T) {
         arr.push(number);
 
         let mut last_ele_i = arr.len() - 1;
@@ -87,35 +87,24 @@ impl solution {
         }
     }
 
-    fn pop(arr: &mut Vec<i32>) {
-        let last_index = arr.len() - 1;
-        let mut index = 0;
-        swap(arr, index, last_index);
-        let len = arr.len();
-
-        loop {
-            let left = get_left_child(index);
-            let right = get_right_child(index);
-
-            let mut great = index;
-
-            if left < len && arr[left] > arr[great] {
-                great = left;
-            }
-
-            if right < len && arr[right] > arr[great] {
-                great = right;
-            }
-
-            if great != index {
-                swap(arr, index, great);
-                index = great;
-            } else {
-                break;
-            }
+    fn pop<T: Debug + Ord>(arr: &mut Vec<T>) -> Option<T> {
+      if arr.is_empty() {
+            return None;
         }
+        
+        let last_index = arr.len() - 1;
+        swap(arr, 0, last_index);
+        
+        // Pop the target element off first or scope the sift-down
+        let extracted = arr.pop(); // Removes the old root safely
+        
+        // If elements remain, sift down the new root within the remaining slice
+        if !arr.is_empty() {
+            sift_down(arr, 0); // sift_down adapted to a slice
+        }
+        
+        extracted
 
-        arr.pop();
     }
 }
 
