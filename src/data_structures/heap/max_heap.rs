@@ -86,6 +86,37 @@ impl solution {
             }
         }
     }
+
+    fn pop(arr: &mut Vec<i32>) {
+        let last_index = arr.len() - 1;
+        let mut index = 0;
+        swap(arr, index, last_index);
+        let len = arr.len();
+
+        loop {
+            let left = get_left_child(index);
+            let right = get_right_child(index);
+
+            let mut great = index;
+
+            if left < len && arr[left] > arr[great] {
+                great = left;
+            }
+
+            if right < len && arr[right] > arr[great] {
+                great = right;
+            }
+
+            if great != index {
+                swap(arr, index, great);
+                index = great;
+            } else {
+                break;
+            }
+        }
+
+        arr.pop();
+    }
 }
 
 #[cfg(test)]
@@ -100,36 +131,45 @@ mod max_heap_test {
 
         assert_eq!(array, result_array);
     }
-    
+
     #[test]
     fn insert_largest_ele() {
         let mut array = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         let result_array = [20, 10, 7, 8, 9, 6, 3, 1, 4, 2, 5];
         solution::create(&mut array);
         solution::insert(&mut array, 20);
-        
-        // println!("array: {:?}", array);
-        assert_eq!(array, result_array);
-    }
-    
-    #[test]
-    fn insert_smallest_ele(){
-           let mut array = vec![2, 3, 4, 5, 6, 7, 8, 9, 10];
-        let result_array = [10, 9, 8, 5, 6, 7, 4, 3, 2, 1];
-        solution::create(&mut array);
-        solution::insert(&mut array, 1);
-        
+
         // println!("array: {:?}", array);
         assert_eq!(array, result_array);
     }
 
-        #[test]
-    fn insert_mid_ele(){
-           let mut array = vec![1, 2, 3, 4, 6, 7, 8, 9, 10];
+    #[test]
+    fn insert_smallest_ele() {
+        let mut array = vec![2, 3, 4, 5, 6, 7, 8, 9, 10];
+        let result_array = [10, 9, 8, 5, 6, 7, 4, 3, 2, 1];
+        solution::create(&mut array);
+        solution::insert(&mut array, 1);
+
+        // println!("array: {:?}", array);
+        assert_eq!(array, result_array);
+    }
+
+    #[test]
+    fn insert_mid_ele() {
+        let mut array = vec![1, 2, 3, 4, 6, 7, 8, 9, 10];
         let result_array = [10, 9, 8, 4, 6, 7, 3, 2, 1, 5];
         solution::create(&mut array);
         solution::insert(&mut array, 5);
-        
+
+        // println!("array: {:?}", array);
+        assert_eq!(array, result_array);
+    }
+    #[test]
+    fn pop_root() {
+        let mut array = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        let result_array = [9, 8, 7, 4, 5, 6, 3, 1, 2];
+        solution::create(&mut array);
+        solution::pop(&mut array);
         // println!("array: {:?}", array);
         assert_eq!(array, result_array);
     }
