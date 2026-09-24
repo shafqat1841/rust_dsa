@@ -24,7 +24,7 @@ fn get_heigh_of_tree(length: usize) -> u32 {
     length.ilog2()
 }
 
-fn sift_down<T: Debug + Ord>(arr: &mut Vec<T>, mut index: usize, len: usize) {
+pub fn sift_down<T: Debug + Ord>(arr: &mut Vec<T>, mut index: usize, len: usize) {
     // println!("arr: {:?}", arr);
 
     loop {
@@ -65,31 +65,11 @@ pub fn build_max_heap<T: Debug + Ord>(arr: &mut Vec<T>) {
     }
 }
 
-pub fn heap_sort<T: Debug + Ord>(arr: &mut Vec<T>) {
-    build_max_heap(arr);
-    let len = arr.len();
-    if  len <= 1 {
-        return;
-    }
-
-    let mut end = len;
-    while end > 1 {
-        end -= 1;
-        swap(arr, 0 , end);
-
-        sift_down(arr, 0, end);
-    }
-}
-
 struct solution;
 
 impl solution {
     fn create<T: Debug + Ord>(arr: &mut Vec<T>) {
         build_max_heap(arr);
-    }
-
-    fn sort<T: Debug + Ord>(arr: &mut Vec<T>) {
-        heap_sort(arr);
     }
 
     fn insert<T: Debug + Ord>(arr: &mut Vec<T>, number: T) {
@@ -184,14 +164,5 @@ mod max_heap_test {
         solution::pop(&mut array);
         // println!("array: {:?}", array);
         assert_eq!(array, result_array);
-    }
-
-    #[test]
-    fn test_heap_sort() {
-        let mut array = vec![4, 10, 3, 5, 1, 8, 2, 7, 9, 6];
-        solution::sort(&mut array);
-        
-        // Should be sorted in ascending order in-place
-        assert_eq!(array, vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     }
 }

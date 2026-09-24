@@ -1,2 +1,2 @@
-mod max_heap;
+pub mod max_heap;
 mod min_heap;
