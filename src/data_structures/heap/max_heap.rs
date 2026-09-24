@@ -24,9 +24,8 @@ fn get_heigh_of_tree(length: usize) -> u32 {
     length.ilog2()
 }
 
-fn sift_down<T: Debug + Ord>(arr: &mut Vec<T>, mut index: usize) {
-    println!("arr: {:?}", arr);
-    let len = arr.len();
+fn sift_down<T: Debug + Ord>(arr: &mut Vec<T>, mut index: usize, len: usize) {
+    // println!("arr: {:?}", arr);
 
     loop {
         let left = 2 * index + 1;
@@ -51,7 +50,9 @@ fn sift_down<T: Debug + Ord>(arr: &mut Vec<T>, mut index: usize) {
 }
 
 pub fn build_max_heap<T: Debug + Ord>(arr: &mut Vec<T>) {
-    if arr.len() <= 1 {
+    let len = arr.len();
+
+    if len <= 1 {
         return;
     }
 
@@ -60,7 +61,23 @@ pub fn build_max_heap<T: Debug + Ord>(arr: &mut Vec<T>) {
 
     while i > 0 {
         i -= 1;
-        sift_down(arr, i);
+        sift_down(arr, i, len);
+    }
+}
+
+pub fn heap_sort<T: Debug + Ord>(arr: &mut Vec<T>) {
+    build_max_heap(arr);
+    let len = arr.len();
+    if  len <= 1 {
+        return;
+    }
+
+    let mut end = len;
+    while end > 1 {
+        end -= 1;
+        swap(arr, 0 , end);
+
+        sift_down(arr, 0, end);
     }
 }
 
@@ -69,6 +86,10 @@ struct solution;
 impl solution {
     fn create<T: Debug + Ord>(arr: &mut Vec<T>) {
         build_max_heap(arr);
+    }
+
+    fn sort<T: Debug + Ord>(arr: &mut Vec<T>) {
+        heap_sort(arr);
     }
 
     fn insert<T: Debug + Ord>(arr: &mut Vec<T>, number: T) {
@@ -88,7 +109,9 @@ impl solution {
     }
 
     fn pop<T: Debug + Ord>(arr: &mut Vec<T>) -> Option<T> {
-      if arr.is_empty() {
+        let len = arr.len();
+
+        if len == 0 {
             return None;
         }
         
@@ -100,7 +123,7 @@ impl solution {
         
         // If elements remain, sift down the new root within the remaining slice
         if !arr.is_empty() {
-            sift_down(arr, 0); // sift_down adapted to a slice
+            sift_down(arr, 0, arr.len()); // sift_down adapted to a slice
         }
         
         extracted
@@ -161,5 +184,14 @@ mod max_heap_test {
         solution::pop(&mut array);
         // println!("array: {:?}", array);
         assert_eq!(array, result_array);
+    }
+
+    #[test]
+    fn test_heap_sort() {
+        let mut array = vec![4, 10, 3, 5, 1, 8, 2, 7, 9, 6];
+        solution::sort(&mut array);
+        
+        // Should be sorted in ascending order in-place
+        assert_eq!(array, vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     }
 }
