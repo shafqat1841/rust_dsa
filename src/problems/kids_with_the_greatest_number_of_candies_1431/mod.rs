@@ -1,11 +1,64 @@
 #[allow(dead_code)]
 struct Solution;
 
+fn solution_1(candies: Vec<i32>, extra_candies: i32) -> Vec<bool> {
+    let mut new_arr = candies.clone(); // time = n , space = n
+    new_arr.sort_unstable(); // time = n log n
+    let high_value = new_arr[new_arr.len() - 1]; // time 1
+
+    let mut result: Vec<bool> = vec![]; // space = n
+
+    for candy in candies {
+        let new_candy = candy + extra_candies;
+
+        if new_candy < high_value {
+            result.push(false);
+        }else {
+            result.push(true);
+        }
+    } // time = n
+
+    // total space = 2 n
+    // total time = n logn
+
+    result
+}
+
+
+fn solution_2(candies: Vec<i32>, extra_candies: i32) -> Vec<bool> {
+    let mut highest_value = 0;
+
+     for candy in candies.iter() {
+        if highest_value < *candy {
+            highest_value = *candy;
+        }
+     } // time = n , space = 1
+
+    let mut result: Vec<bool> = Vec::with_capacity(candies.len()); // time = 1 , space = n
+
+    for candy in candies {
+        let new_candy = candy + extra_candies;
+
+        if new_candy < highest_value {
+            result.push(false);
+        }else {
+            result.push(true);
+        }
+    } // time = n , space = 1
+
+    // total space = n
+    // total time = 2n
+
+    result
+}
+
 impl Solution {
     #[allow(dead_code)]
     pub fn kids_with_candies(candies: Vec<i32>, extra_candies: i32) -> Vec<bool> {
-        vec![true]
+        // solution_1(candies, extra_candies)
+        solution_2(candies, extra_candies)
     }
+
 }
 
 #[cfg(test)]
