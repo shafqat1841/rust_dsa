@@ -9,6 +9,8 @@ pub fn heap_sort<T: Debug + Ord>(arr: &mut Vec<T>) {
         return;
     }
 
+    
+
     let mut end = len;
     while end > 1 {
         end -= 1;
