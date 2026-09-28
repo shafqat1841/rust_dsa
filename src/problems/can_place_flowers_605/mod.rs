@@ -98,13 +98,73 @@ fn sol1(flowerbed: Vec<i32>, n: i32) -> bool {
     false
 }
 
+fn sol2(mut flowerbed: Vec<i32>, n: i32) -> bool {
+    let mut count = 0;
+
+    let mut i = 0;
+
+    while i < flowerbed.len() {
+        if flowerbed[i] == 0 {
+            let mut left = false;
+            let mut right = false;
+
+            if i == 0 || flowerbed[i - 1] == 0 {
+                left = true;
+            }
+
+            if i == flowerbed.len() - 1 || flowerbed[i + 1] == 0 {
+                right = true;
+            }
+
+            if left & right {
+                count += 1;
+
+                flowerbed[i] = 1;
+
+                if count >= n {
+                    return true;
+                }
+            }
+        }
+
+        i += 1;
+    }
+
+    count >= n
+}
+
+fn sol3(mut flowerbed: Vec<i32>, n: i32) -> bool {
+    let mut count = 0;
+    let len = flowerbed.len();
+
+    for i in 0..len {
+        if flowerbed[i] == 0 {
+            let is_left_empty = i == 0 || flowerbed[i - 1] == 0;
+            let is_right_empty = i == len - 1 || flowerbed[i + 1] == 0;
+
+            if is_left_empty && is_right_empty {
+                flowerbed[i] = 1;
+                count += 1;
+
+                if count >= n {
+                    return true;
+                }
+            }
+        }
+    }
+
+    count >= n
+}
+
 #[allow(dead_code)]
 struct Solution;
 
 impl Solution {
     #[allow(dead_code)]
     pub fn can_place_flowers(flowerbed: Vec<i32>, n: i32) -> bool {
-        sol1(flowerbed, n)
+        // sol1(flowerbed, n)
+        // sol2(flowerbed, n)
+        sol3(flowerbed, n)
     }
 }
 
