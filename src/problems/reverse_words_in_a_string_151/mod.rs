@@ -1,3 +1,4 @@
+
 fn sol1(s: String) -> String {
     "".to_string()
 }

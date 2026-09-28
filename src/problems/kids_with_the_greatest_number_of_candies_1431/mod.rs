@@ -1,4 +1,4 @@
-#[allow(dead_code)]
+#![allow(dead_code)]
 struct Solution;
 
 fn solution_1(candies: Vec<i32>, extra_candies: i32) -> Vec<bool> {

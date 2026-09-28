@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+#![allow(dead_code)]
 
 fn sol1(flowerbed: Vec<i32>, n: i32) -> bool {
     if flowerbed.len() == 1 {

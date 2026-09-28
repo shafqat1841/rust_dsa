@@ -1,6 +1,5 @@
-// use std::collections::HashMap;
+#![allow(dead_code)]
 
-// a e i o u
 fn sol1(s: String) -> String {
     println!("s: {}", s);
 
@@ -42,7 +41,7 @@ fn sol1(s: String) -> String {
     let result = match String::from_utf8(s) {
         Ok(s) => s,
         Err(e) => {
-            panic!("Error: Could not convert bytes to string");
+            panic!("Error: Could not convert bytes to string. e: {}", e);
         }
     };
 

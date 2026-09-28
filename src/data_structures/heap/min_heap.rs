@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use std::fmt::Debug;
 
 fn swap<T: Debug + Ord>(arr: &mut Vec<T>, left: usize, right: usize) {
@@ -64,9 +66,9 @@ pub fn build_min_heap<T: Debug + Ord>(arr: &mut Vec<T>) {
     }
 }
 
-struct solution;
+struct Solution;
 
-impl solution {
+impl Solution {
     fn create<T: Debug + Ord>(arr: &mut Vec<T>) {
         build_min_heap(arr);
     }
@@ -115,7 +117,7 @@ mod min_heap_test {
     fn create_data_structure() {
         let mut array = vec![10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
         let result_array = [1, 2, 4, 3, 6, 5, 8, 10, 7, 9];
-        solution::create(&mut array);
+        Solution::create(&mut array);
 
         // println!("array: {:?}", array);
 
@@ -126,8 +128,8 @@ mod min_heap_test {
     fn insert_largest_ele() {
         let mut array = vec![10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
         let result_array = [1, 2, 4, 3, 6, 5, 8, 10, 7, 9, 20];
-        solution::create(&mut array);
-        solution::insert(&mut array, 20);
+        Solution::create(&mut array);
+        Solution::insert(&mut array, 20);
 
         // println!("array: {:?}", array);
         //           1
@@ -141,8 +143,8 @@ mod min_heap_test {
     fn insert_smallest_ele() {
         let mut array = vec![2, 3, 4, 5, 6, 7, 8, 9, 10];
         let result_array = [1, 2, 4, 5, 3, 7, 8, 9, 10, 6];
-        solution::create(&mut array);
-        solution::insert(&mut array, 1);
+        Solution::create(&mut array);
+        Solution::insert(&mut array, 1);
 
         // println!("array: {:?}", array);
          //           1
@@ -156,8 +158,8 @@ mod min_heap_test {
     fn insert_mid_ele() {
         let mut array = vec![1, 2, 3, 4, 6, 7, 8, 9, 10];
         let result_array = [1, 2, 3, 4, 5, 7, 8, 9, 10, 6];
-        solution::create(&mut array);
-        solution::insert(&mut array, 5);
+        Solution::create(&mut array);
+        Solution::insert(&mut array, 5);
 
         println!("array: {:?}", array);
         //           1
@@ -171,8 +173,8 @@ mod min_heap_test {
     fn pop_root() {
         let mut array = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         let result_array = [2, 4, 3, 8, 5, 6, 7, 10, 9];
-        solution::create(&mut array);
-        solution::pop(&mut array);
+        Solution::create(&mut array);
+        Solution::pop(&mut array);
         // println!("array: {:?}", array);
          //           2
         //      4    /   3
