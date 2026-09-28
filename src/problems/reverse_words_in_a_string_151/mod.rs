@@ -1,5 +1,5 @@
 
-fn sol1(s: String) -> String {
+fn sol1(_s: String) -> String {
     "".to_string()
 }
 
