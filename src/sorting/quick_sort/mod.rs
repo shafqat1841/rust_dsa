@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 mod optimize_arr;
 mod quick_sort_1;
 mod quick_sort_2;

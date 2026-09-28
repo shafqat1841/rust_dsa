@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use std::fmt::Debug;
 
 use crate::data_structures::heap::max_heap::{build_max_heap,sift_down};
