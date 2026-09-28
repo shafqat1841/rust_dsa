@@ -100,9 +100,7 @@ fn sol2(s: String) -> String {
 
 // accepted
 fn sol3(s: String) -> String {
-    println!("s: {}", s);
-
-      let vowels = "aeiouAEIOU".as_bytes();
+    let vowels = "aeiouAEIOU".as_bytes();
 
     let len = s.len();
     let mut i1 = 0;
@@ -115,7 +113,6 @@ fn sol3(s: String) -> String {
             let char = s[i];
             let res = vowels.contains(&char);
             i1 = i;
-            println!("i1: {}", i1);
             if res {
                 break;
             }
@@ -124,7 +121,6 @@ fn sol3(s: String) -> String {
             let char = s[j];
             let res = vowels.contains(&char);
             i2 = j;
-            println!("i2: {}", i2);
             if res {
                 break;
             }
@@ -146,11 +142,43 @@ fn sol3(s: String) -> String {
         }
     };
 
-    println!("result: {}", result);
-
     result
 }
 
+// accepted and clean code
+fn sol4(s: String) -> String {
+    let mut bytes = s.into_bytes(); // time = 1 , space = 1
+    let mut left = 0;
+    let mut right = if bytes.is_empty() { 0 } else { bytes.len() - 1 };
+
+    let is_vowel = |b: u8| {
+        matches!(
+            b,
+            b'a' | b'e' | b'i' | b'o' | b'u' | b'A' | b'E' | b'I' | b'O' | b'U'
+        )
+    }; // time = 1 , space = 8
+
+    while left < right {
+        // Move left pointer forward until it hits a vowel
+        while left < right && !is_vowel(bytes[left]) {
+            left += 1;
+        }
+        // Move right pointer backward until it hits a vowel
+        while left < right && !is_vowel(bytes[right]) {
+            right -= 1;
+        }
+
+        if left < right {
+            bytes.swap(left, right);
+            left += 1;
+            right -= 1;
+        }
+    } // time = n , space = 1
+
+    String::from_utf8(bytes).unwrap() // time = 1 , space = 1
+
+    // total time = n , total space = 1 
+}
 #[allow(dead_code)]
 struct Solution;
 
@@ -159,7 +187,8 @@ impl Solution {
     pub fn reverse_vowels(s: String) -> String {
         // sol1(s)
         // sol2(s)
-        sol3(s)
+        // sol3(s)
+        sol4(s)
     }
 }
 
