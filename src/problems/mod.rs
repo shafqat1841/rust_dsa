@@ -3,3 +3,4 @@ mod greatest_common_divisor_of_strings_1071;
 mod kids_with_the_greatest_number_of_candies_1431;
 mod can_place_flowers_605;
 mod reverse_vowels_of_a_string_345;
+mod reverse_words_in_a_string_151;
