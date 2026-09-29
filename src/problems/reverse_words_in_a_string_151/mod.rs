@@ -1,94 +1,34 @@
-fn sol1(mut s: &str) -> String {
-    // println!("s: {}", s);
-    // println!("s len: {}", s.len());
 
-    if s.len() == 0 {
-        return s.to_string();
-    }
-
-    if s.chars().nth(0).unwrap() == ' ' {
-        let mut empty = 1;
-
-        for i in 1..s.len() {
-            if s.chars().nth(i).unwrap() == ' ' {
-                empty += 1;
-            } else {
-                break;
-            }
-        }
-        // println!("empty 1: {}", empty);
-
-        s = &s[empty..];
-    }
-
-    // let mut len = s.len();
-
-    if s.chars().nth(s.len() - 1).unwrap() == ' ' {
-        let mut empty = s.len();
-
-        for i in (s.len() - 1)..0 {
-            if s.chars().nth(i).unwrap() == ' ' {
-                empty -= 1;
-            } else {
-                break;
-            }
-        }
-        // println!("empty 2: {}", empty);
-
-        s = &s[..empty];
-    }
-
-    // println!("s: {}", s);
-    // println!("s len: {}", s.len());
-
-    s.to_string()
-}
-
-fn sol2(s: &str) -> String {
-    // println!("s: {}", s);
+fn sol3(s: &str) -> String {
     let mut res = Vec::<String>::new();
 
     let s = s.as_bytes();
 
-    let mut i = s.len();
+    let len = s.len();
 
-    while i > 0 {
-        i -= 1;
+    let mut i = 0;
+
+    while i < len {
 
         if s[i] != 32 {
             let start = i;
             let mut end = start;
-
-            while end > 0 && s[end] != 32 {
-                end -= 1;
+            while end < len && s[end] != 32 {
+                end += 1;
             }
 
-            let end_value = if end == 0 { 0 } else { end + 1};
-            
-            let data = &s[end_value..=start];
+            let u8_word = s[start..end].to_vec();
+            let word = String::from_utf8(u8_word).unwrap();
 
-            // println!("data: {:?}",data);
-            
-            let aaa = String::from_utf8(data.to_vec()).unwrap();
-            // println!("aaa: {:?}",aaa);
-            res.push(aaa);
-            if end != 0 {
-                res.push(" ".to_string());
-            }
+            res.insert(0, word);
 
             i = end;
         }
+
+        i += 1;
     }
 
-    res.join("")
-
-    // match String::from_utf8(res) {
-    //     Err(e) => {
-    //         panic!("Error: {}", e);
-    //     },
-    //     Ok(val) => val
-    // }
-
+    res.join(" ")
 }
 
 #[allow(dead_code)]
@@ -98,7 +38,8 @@ impl Solution {
     #[allow(dead_code)]
     pub fn reverse_words(s: String) -> String {
         // sol1(&s)
-        sol2(&s)
+        // sol2(&s)
+        sol3(&s)
     }
 }
 
