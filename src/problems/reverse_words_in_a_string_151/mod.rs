@@ -37,8 +37,6 @@ struct Solution;
 impl Solution {
     #[allow(dead_code)]
     pub fn reverse_words(s: String) -> String {
-        // sol1(&s)
-        // sol2(&s)
         sol3(&s)
     }
 }
