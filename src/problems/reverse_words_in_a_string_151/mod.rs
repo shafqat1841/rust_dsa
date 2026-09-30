@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 fn sol1(s: &str) -> String {
     let mut res = Vec::<String>::new();
 
@@ -60,10 +62,69 @@ fn sol2(s: &str) -> String {
 
     words.reverse(); // time = n , space = 1
 
-    words.join(" ")  // time = n , space = n
+    words.join(" ") // time = n , space = n
 
     // total time = 3n = n
     // total space = 2n = n
+}
+
+fn sol3(s: String) -> String {
+    if s.len() == 0 {
+        return s;
+    }
+
+    let mut bytes = s.into_bytes();
+
+    let reverse = |slice: &mut [u8]| {
+        let mut l = 0;
+        let mut r = slice.len() - 1;
+
+        while l < r {
+            slice.swap(l, r);
+            l += 1;
+            r -= 1;
+        }
+    };
+
+    reverse(&mut bytes); // time = n , space = 1
+
+    let l = bytes.len();
+    let mut i = 0;
+    let mut j = i;
+
+    while i < l {
+        while i < l && bytes[i] == b' ' {
+            i += 1;
+        }
+
+        if i >= l {
+            break;
+        }
+
+        if j > 0 {
+            bytes[j] = b' ';
+            j += 1;
+        }
+
+        let start = j;
+
+        while i < l && bytes[i] != b' ' {
+            bytes[j] = bytes[i];
+            i += 1;
+            j += 1;
+        }
+
+        reverse(&mut bytes[start..j]);
+    } // time = n , space = 1
+
+    bytes.truncate(j); // time = 1 , space = 1
+
+    let res = String::from_utf8(bytes).unwrap(); // time = n , space = 1
+
+    // total time = 3n = n
+    // total space = 1
+
+    res
 }
 
 #[allow(dead_code)]
@@ -73,7 +134,8 @@ impl Solution {
     #[allow(dead_code)]
     pub fn reverse_words(s: String) -> String {
         // sol1(&s)
-        sol2(&s)
+        // sol2(&s)
+        sol3(s)
     }
 }
 
