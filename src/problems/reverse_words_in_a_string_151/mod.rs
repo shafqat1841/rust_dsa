@@ -1,5 +1,4 @@
-
-fn sol3(s: &str) -> String {
+fn sol1(s: &str) -> String {
     let mut res = Vec::<String>::new();
 
     let s = s.as_bytes();
@@ -9,7 +8,6 @@ fn sol3(s: &str) -> String {
     let mut i = 0;
 
     while i < len {
-
         if s[i] != 32 {
             let start = i;
             let mut end = start;
@@ -31,13 +29,51 @@ fn sol3(s: &str) -> String {
     res.join(" ")
 }
 
+// optimized code
+fn sol2(s: &str) -> String {
+    let mut words = Vec::<&str>::new(); // time = 1 , space = n 
+
+    let bytes = s.as_bytes();
+
+    let len = s.len();
+
+    let mut i = 0;
+
+    while i < len {
+        if bytes[i] == 32 {
+            i += 1;
+            continue;
+        }
+
+        if i >= len {
+            break;
+        }
+
+        let start = i;
+        while i < len && bytes[i] != 32 {
+            i += 1;
+        }
+
+        let word = &s[start..i];
+        words.push(word);
+    } // time = n , space = 1 
+
+    words.reverse(); // time = n , space = 1
+
+    words.join(" ")  // time = n , space = n
+
+    // total time = 3n = n
+    // total space = 2n = n
+}
+
 #[allow(dead_code)]
 struct Solution;
 
 impl Solution {
     #[allow(dead_code)]
     pub fn reverse_words(s: String) -> String {
-        sol3(&s)
+        // sol1(&s)
+        sol2(&s)
     }
 }
 
