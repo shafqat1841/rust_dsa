@@ -1,5 +1,7 @@
 #![allow(dead_code)]
 
+use std::fmt::Alignment::Right;
+
 fn sol1(nums: Vec<i32>) -> Vec<i32> {
     println!("nums 1: {:?}", nums);
     let mut l = 1;
@@ -56,8 +58,31 @@ fn sol2(nums: Vec<i32>) -> Vec<i32> {
         res[j] = res[j] * ans;
     } // time = n , space = 1
 
-    // total time = 2n = n  
+    // total time = 2n = n
     // total space = n = n
+
+    res
+}
+
+// optimized and ideomatic
+fn sol3(nums: Vec<i32>) -> Vec<i32> {
+    let len = nums.len();
+    let mut res = vec![1; len]; // time = 1 , space = n
+
+    let mut left = 1;
+    for i in 0..len {
+        res[i] = left;
+        left *= nums[i];
+    } // time = n , space = 1
+
+    let mut right = 1;
+    for i in (0..len).rev() {
+        res[i] *= right;
+        right *= nums[i];
+    } // time = n , space = 1
+
+      // total time = n + n + 1 => 2n + 1 = n
+    // total space = n + 1 + 1 => n + 2 = n
 
     res
 }
@@ -68,7 +93,8 @@ impl Solution {
     #[allow(dead_code)]
     pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
         // sol1(nums)
-        sol2(nums)
+        // sol2(nums)
+        sol3(nums)
     }
 }
 
