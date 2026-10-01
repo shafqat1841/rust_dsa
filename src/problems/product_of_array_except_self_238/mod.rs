@@ -9,7 +9,7 @@ fn sol1(nums: Vec<i32>) -> Vec<i32> {
     let mut j = len;
 
     let mut nums2 = nums.clone();
-    
+
     while i < len {
         let number = if i == 0 { 1 } else { nums[i - 1] };
         let ans = l * number;
@@ -18,7 +18,7 @@ fn sol1(nums: Vec<i32>) -> Vec<i32> {
         i += 1;
     }
     println!("nums2: {:?}", nums2);
-    
+
     while j > 0 {
         j -= 1;
         let number = if j == len - 1 { 1 } else { nums[j + 1] };
@@ -31,36 +31,35 @@ fn sol1(nums: Vec<i32>) -> Vec<i32> {
     nums2
 }
 
-
 fn sol2(nums: Vec<i32>) -> Vec<i32> {
-    println!("nums 1: {:?}", nums);
     let mut l = 1;
     let mut r = 1;
     let len = nums.len();
     let mut i = 0;
     let mut j = len;
 
-    let mut nums2 = nums.clone();
-    
+    let mut res = Vec::with_capacity(len); // time = 1 , space = n
+
     while i < len {
         let number = if i == 0 { 1 } else { nums[i - 1] };
         let ans = l * number;
         l = ans;
-        nums2[i] = ans;
+        res.push(ans);
         i += 1;
-    }
-    println!("nums2: {:?}", nums2);
-    
+    } // time = n , space = 1
+
     while j > 0 {
         j -= 1;
         let number = if j == len - 1 { 1 } else { nums[j + 1] };
         let ans = r * number;
         r = ans;
-        nums2[j] = nums2[j] * ans;
-    }
-    println!("nums2: {:?}", nums2);
+        res[j] = res[j] * ans;
+    } // time = n , space = 1
 
-    nums2
+    // total time = 2n = n  
+    // total space = n = n
+
+    res
 }
 
 struct Solution;
@@ -85,11 +84,11 @@ mod product_of_array_except_self_238_tests {
         assert_eq!(result, correct_output);
     }
 
-        #[test]
-        fn check_no_2() {
-            let input = [-1, 1, 0, -3, 3];
-            let correct_output = [0, 0, 9, 0, 0];
-            let result = Solution::product_except_self(input.to_vec());
-            assert_eq!(result, correct_output);
-        }
+    #[test]
+    fn check_no_2() {
+        let input = [-1, 1, 0, -3, 3];
+        let correct_output = [0, 0, 9, 0, 0];
+        let result = Solution::product_except_self(input.to_vec());
+        assert_eq!(result, correct_output);
+    }
 }
