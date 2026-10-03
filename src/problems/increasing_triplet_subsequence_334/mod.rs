@@ -1,8 +1,9 @@
 #![allow(dead_code)]
+#![allow(unused)]
 
 // not accepted by leetcode because
 // Time Limit Exceeded 78 / 87 testcases passed
-// and also because it a brute force and of the time complexity O(n^3) which is not optimal for this problem 
+// and also because it a brute force and of the time complexity O(n^3) which is not optimal for this problem
 
 fn sol1(nums: Vec<i32>) -> bool {
     // println!("nums: {:?}", nums);
@@ -60,19 +61,19 @@ fn sol1(nums: Vec<i32>) -> bool {
 // accepted by leetcode
 fn sol2(nums: Vec<i32>) -> bool {
     let mut first = i32::MAX;
-        let mut second = i32::MAX;
+    let mut second = i32::MAX;
 
-        for num in nums {
-            if num <= first {
-                first = num;
-            } else if num <= second {
-                second = num;
-            } else {
-                return true;
-            }
-        } // time = n , space = 1
+    for num in nums {
+        if num <= first {
+            first = num;
+        } else if num <= second {
+            second = num;
+        } else {
+            return true;
+        }
+    } // time = n , space = 1
 
-        false
+    false
 }
 
 struct Solution;
@@ -86,7 +87,7 @@ impl Solution {
 }
 
 #[cfg(test)]
-mod increasing_triplet_subsequence_334 {
+mod increasing_triplet_subsequence_334_tests {
     use super::*;
 
     #[test]
