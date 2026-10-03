@@ -10,7 +10,7 @@
 // [1]
 // []
 
-// accepted
+// accepted optimized
 fn sol1(nums: &mut Vec<i32>) {
     let mut zi: usize = 0;
     let mut nzi: usize = 0;
