@@ -57,12 +57,31 @@ fn sol1(nums: Vec<i32>) -> bool {
     return false;
 }
 
+// accepted by leetcode
+fn sol2(nums: Vec<i32>) -> bool {
+    let mut first = i32::MAX;
+        let mut second = i32::MAX;
+
+        for num in nums {
+            if num <= first {
+                first = num;
+            } else if num <= second {
+                second = num;
+            } else {
+                return true;
+            }
+        } // time = n , space = 1
+
+        false
+}
+
 struct Solution;
 
 impl Solution {
     #[allow(dead_code)]
     pub fn increasing_triplet(nums: Vec<i32>) -> bool {
-        sol1(nums)
+        // sol1(nums)
+        sol2(nums)
     }
 }
 
