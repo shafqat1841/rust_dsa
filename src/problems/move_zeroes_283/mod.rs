@@ -16,14 +16,16 @@ fn sol1(nums: &mut Vec<i32>) {
     let mut nzi: usize = 0;
 
     while nzi < nums.len() {
-        let ele = nums[nzi];
-        if ele != 0 {
-            nums.swap(nzi, zi);
+        
+        if nums[nzi] != 0 {
+            if nzi != zi {
+                nums.swap(nzi, zi);
+            }
             zi += 1;
         }
 
         nzi += 1;
-    }
+    } // time = n , space = 1
 }
 
 struct Solution;
