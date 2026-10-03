@@ -35,13 +35,55 @@ fn sol1(chars: &mut Vec<char>) -> i32 {
     i2 as i32
 }
 
+// optimized
+fn sol2(chars: &mut Vec<char>) -> i32 {
+    let mut i1 = 0;
+    let mut i2 = 0;
+    // let mut count = 0;
+
+    while i1 < chars.len() {
+        let c_c = chars[i1];
+        let mut c_count = 1;
+
+        i1 += 1;
+
+        while i1 < chars.len() && chars[i1] == c_c {
+            i1 += 1;
+            c_count += 1;
+        }
+
+        chars[i2] = c_c;
+        i2 += 1;
+
+        if c_count > 1 {
+            let mut temp = c_count;
+            let mut digits_len = 0;
+            while temp > 0 {
+                digits_len += 1;
+                temp /= 10;
+            }
+
+            let mut write_idx = i2 + digits_len;
+            let mut num = c_count;
+            while num > 0 {
+                write_idx -= 1;
+                chars[write_idx] = char::from_digit((num % 10) as u32, 10).unwrap();
+                num /= 10;
+            }
+            i2 += digits_len;
+        }
+    }
+
+    i2 as i32
+}
+
 struct Solution;
 
 impl Solution {
     #[allow(dead_code)]
     pub fn compress(chars: &mut Vec<char>) -> i32 {
         // sol1(nums)
-        sol1(chars)
+        sol2(chars)
     }
 }
 
