@@ -14,9 +14,10 @@ use std::cmp;
 // ia = first index
 // ib = second index
 // h * w
-// h = min(input[ia], input[ib])
-// w = ia - ib
+// h = min(input[ia], input[ib]) // need to be as greatest as possible
+// w = ia - ib // need to be as greatest as possible
 
+// failed
 fn sol1(height: Vec<i32>) -> i32 {
     let mut output = 0;
 
@@ -60,12 +61,47 @@ fn sol1(height: Vec<i32>) -> i32 {
 
     output
 }
+
+
+// accepted but not optimized
+fn sol2(height: Vec<i32>) -> i32 {
+
+    let mut i_s = 0;
+    let mut i_e = height.len() - 1;
+
+    let mut max_area = 0;
+
+    while i_s < i_e {
+        let ele1 = height[i_s];
+        let ele2 = height[i_e];
+
+        let height = cmp::min(ele1, ele2);
+
+        let width = i_e - i_s;
+
+        let area = height * (width as i32);
+
+        println!("area: {}",area);
+
+        if area > max_area {
+            max_area = area;
+        }
+
+        if ele1 < ele2 {
+            i_s += 1;
+        } else {
+            i_e -= 1;
+        }
+    }
+
+    max_area
+}
 struct Solution;
 
 impl Solution {
     #[allow(dead_code)]
     pub fn max_area(height: Vec<i32>) -> i32 {
-        sol1(height)
+        sol2(height)
     }
 }
 
@@ -99,7 +135,7 @@ mod container_with_most_water_11_tests {
 
     #[test]
     fn check_no_4() {
-        let mut height = [2,3,4,5,18,17,6].to_vec();
+        let mut height = [2, 3, 4, 5, 18, 17, 6].to_vec();
         let correct_output = 17;
         let result = Solution::max_area(height);
         assert_eq!(result, correct_output);
