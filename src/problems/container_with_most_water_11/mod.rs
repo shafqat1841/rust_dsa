@@ -81,8 +81,6 @@ fn sol2(height: Vec<i32>) -> i32 {
 
         let area = height * (width as i32);
 
-        println!("area: {}",area);
-
         if area > max_area {
             max_area = area;
         }
@@ -96,12 +94,42 @@ fn sol2(height: Vec<i32>) -> i32 {
 
     max_area
 }
+
+// Micro-optimized version avoiding index bounds checks
+pub fn sol3(height: Vec<i32>) -> i32 {
+    let mut left = height.as_ptr();
+    let mut right = unsafe { left.add(height.len() - 1) };
+    let mut max_area = 0;
+
+    unsafe {
+        while left < right {
+            let l_val = *left;
+            let r_val = *right;
+            
+            let current_height = if l_val < r_val { l_val } else { r_val };
+            let width = (right.offset_from(left)) as i32;
+            let area = current_height * width;
+
+            if area > max_area {
+                max_area = area;
+            }
+
+            if l_val < r_val {
+                left = left.add(1);
+            } else {
+                right = right.sub(1);
+            }
+        }
+    }
+
+    max_area
+}
 struct Solution;
 
 impl Solution {
     #[allow(dead_code)]
     pub fn max_area(height: Vec<i32>) -> i32 {
-        sol2(height)
+        sol3(height)
     }
 }
 
