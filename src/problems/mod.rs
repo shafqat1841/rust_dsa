@@ -10,3 +10,4 @@ mod string_compression_443;
 mod move_zeroes_283;
 mod is_subsequence_392;
 mod container_with_most_water_11;
+mod max_number_of_k_sum_pairs_1679;
