@@ -7,7 +7,7 @@ use std::collections::HashMap;
 
 // accepted
 fn sol1(nums: Vec<i32>, k: i32) -> i32 {
-    let mut map: HashMap<i32, i32> = HashMap::new();
+    let mut map: HashMap<i32, i32> = HashMap::new(); // time = 1 , space = n
 
     let mut found_nums = 0;
 
@@ -38,16 +38,74 @@ fn sol1(nums: Vec<i32>, k: i32) -> i32 {
                 map.insert(val, 1);
             }
         }
+    } // time = n , space = 1
+
+    // total time = n
+    // total space = n
+
+    found_nums
+}
+
+// total time = n
+// total space = n
+fn sol2(nums: Vec<i32>, k: i32) -> i32 {
+    let mut map: HashMap<i32, i32> = HashMap::new();
+
+    let mut found_nums = 0;
+
+    for val in nums {
+        if val >= k {
+            continue;
+        }
+
+        let complement = k - val;
+
+        if let Some(count) = map.get_mut(&complement) {
+            *count -= 1;
+            if *count == 0 {
+                map.remove(&complement);
+            }
+            found_nums += 1;
+        } else {
+            *map.entry(val).or_insert(0) += 1;
+        }
     }
 
     found_nums
+}
+
+// total time = nlog(n)
+// total space = 1
+// accepted and is faster then sol2 on leetcode
+fn sol3(mut nums: Vec<i32>, k: i32) -> i32 {
+    nums.sort_unstable();
+
+    let mut left = 0;
+    let mut right = nums.len() - 1;
+    let mut res = 0;
+
+    while left < right {
+        let sum = nums[left] + nums[right];
+
+        if sum == k {
+            res += 1;
+            left += 1;
+            right -= 1;
+        } else if sum < k {
+            left += 1;
+        } else {
+            right -= 1;
+        }
+    }
+
+    res
 }
 struct Solution;
 
 impl Solution {
     #[allow(dead_code)]
     pub fn max_operations(nums: Vec<i32>, k: i32) -> i32 {
-        sol1(nums, k)
+        sol3(nums, k)
     }
 }
 
