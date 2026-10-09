@@ -5,41 +5,39 @@
 
 use std::collections::HashMap;
 
-// println!("nums: {:?}",nums);
-// println!("found_nums: {:?}",found_nums);
-// [1, 2, 3, 4] / 5
-// [3, 1, 3, 4, 3] / 6
-
-// [2,2,2,3,1,1,4,1] / 4 = 2
-
-//  1       2       2     2 1 2 1 1
-// [2,5,4,4,1,3,4,4,1,4,4,1,2,1,2,2,3,2,4,2]
-// 3
+// accepted
 fn sol1(nums: Vec<i32>, k: i32) -> i32 {
     let mut map: HashMap<i32, i32> = HashMap::new();
 
     let mut found_nums = 0;
 
     for val in nums {
-        println!("val: {:?}", val);
-
-        if k < val || val == k  {
+        if k < val || val == k {
             continue;
         }
 
         let key = k - val;
 
-        if map.contains_key(&val) {
-            println!("before remove map: {:?}",map);
+        if map.contains_key(&key) {
+            if let Some(v) = map.get(&key) {
+                let new_val = v - 1;
+                if new_val == 0 {
+                    map.remove(&key);
+                } else {
+                    map.insert(key, new_val);
+                }
+            }
+
             found_nums += 1;
-            map.remove(&val);
-            println!("after remove map: {:?}",map);
-            println!("found_nums: {:?}",found_nums);
         } else {
-            map.insert(key, val);
-            println!("insert map: {:?}",map);
+            if map.contains_key(&val) {
+                if let Some(v) = map.get(&val) {
+                    map.insert(val, v + 1);
+                }
+            } else {
+                map.insert(val, 1);
+            }
         }
-        println!("---------------------------------------------");
     }
 
     found_nums
