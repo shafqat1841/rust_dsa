@@ -63,13 +63,17 @@ fn sol1(s: String, k: i32) -> i32 {
 }
 
 
+
+fn is_vowel(b: u8) -> bool {
+    matches!(b,b'a' | b'e' | b'i' | b'o' | b'u')
+} // time = 1 , space = 5
+
 // accepted
+// total time = n
+// total space = 1
 fn sol2(s: String, k: i32) -> i32 {
     let k = k as usize;
 
-    let is_vowel = |b: u8| {
-    matches!(b,b'a' | b'e' | b'i' | b'o' | b'u')
-    }; // time = 1 , space = 5
 
     let s = &s;
     
