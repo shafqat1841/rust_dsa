@@ -14,94 +14,108 @@ use std::collections::HashSet;
 // r = 2
 
 
-
+// accepted
 fn sol1(s: String, k: i32) -> i32 {
     let k = k as usize;
-    // let vowals = [b'a',b'e',b'i',b'o',b'u'];
     let mut vowals: HashSet<u8> = std::collections::HashSet::new();
     vowals.insert(b'a');
     vowals.insert(b'e');
     vowals.insert(b'i');
     vowals.insert(b'o');
     vowals.insert(b'u');
+
+    let s = &s;
     
     let bytes = s.as_bytes();
 
-     // s = "leetcode"
-    // k = 3
-    
     let mut max_vowals = 0; 
     for val in &bytes[..k] {
         if vowals.contains(val) {
             max_vowals += 1;
         }
     }
-    // max_vowals = 2
-    
-    // s = "leetcode"
-    // k = 3
 
-    // tcode
-    // lee
-    
-    // code
-    // ee
-    // e
-    // c
-
-    // ode
-    // e
-    // e
-    // o
-
-    // de
-    // tcode
-    // t
-    // d
-
-    // e
-    // code
-    // c
-    // e
-
-    // max_vowals = 2
+    let mut lv = max_vowals; 
     for i in k..bytes.len() {
         
-        let mut lv = max_vowals; 
-        // lv = 2
-        
-        let le = bytes[i - k];
-        // le = c
+        let j = i - k;
+        let le = bytes[j];
         
         let ne = bytes[i];
-        // ne = e
         
         if vowals.contains(&le) {
-            lv -= 1;
+            if lv - 1 >= 0 {
+                lv -= 1;
+            }
         } 
-        // lv = 2
         
         if vowals.contains(&ne) {
             lv += 1;
         } 
-        // lv = 3
-
+        
         if lv > max_vowals {
             max_vowals = lv;
         }
-        // max_vowals = 3
 
     }
 
     max_vowals
 }
 
+
+// accepted
+fn sol2(s: String, k: i32) -> i32 {
+    let k = k as usize;
+
+    let is_vowel = |b: u8| {
+    matches!(b,b'a' | b'e' | b'i' | b'o' | b'u')
+    }; // time = 1 , space = 5
+
+    let s = &s;
+    
+    let bytes = s.as_bytes();
+
+    let mut max_vowals = 0; 
+    for val in &bytes[..k] {
+        if is_vowel(*val) {
+            max_vowals += 1;
+        }
+    } // time = k , space = 1
+
+    let mut lv = max_vowals; 
+    for i in k..bytes.len() {
+        
+        let j = i - k;
+        let le = bytes[j];
+        
+        let ne = bytes[i];
+        
+        if is_vowel(le) {
+            if lv - 1 >= 0 {
+                lv -= 1;
+            }
+        } 
+        
+        if is_vowel(ne) {
+            lv += 1;
+        } 
+        
+        if lv > max_vowals {
+            max_vowals = lv;
+        }
+
+    } // time = n - k , space = 1 
+
+    max_vowals
+}
+
+
 struct Solution;
 
 impl Solution {
     #[allow(dead_code)]
     pub fn max_vowels(s: String, k: i32) -> i32 {
-        sol1(s,k)   
+        sol2(s,k)   
     }
 }
 
