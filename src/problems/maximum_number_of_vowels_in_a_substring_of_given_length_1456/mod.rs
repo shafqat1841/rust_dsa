@@ -73,44 +73,40 @@ fn is_vowel(b: u8) -> bool {
 // total space = 1
 fn sol2(s: String, k: i32) -> i32 {
     let k = k as usize;
-
-
-    let s = &s;
-    
     let bytes = s.as_bytes();
+    
+    if bytes.len() < k {
+        return 0;
+    }
 
-    let mut max_vowals = 0; 
-    for val in &bytes[..k] {
-        if is_vowel(*val) {
-            max_vowals += 1;
+    let mut max_vowels = 0;
+    
+    // Initialize the first window
+    for &val in &bytes[..k] {
+        if is_vowel(val) {
+            max_vowels += 1;
         }
-    } // time = k , space = 1
+    }
 
-    let mut lv = max_vowals; 
+    let mut lv = max_vowels;
+    
     for i in k..bytes.len() {
-        
-        let j = i - k;
-        let le = bytes[j];
-        
+        let le = bytes[i - k]; 
         let ne = bytes[i];
-        
+
         if is_vowel(le) {
-            if lv - 1 >= 0 {
-                lv -= 1;
-            }
-        } 
-        
+            lv -= 1;
+        }
         if is_vowel(ne) {
             lv += 1;
-        } 
-        
-        if lv > max_vowals {
-            max_vowals = lv;
         }
+        
+        if lv > max_vowels {
+            max_vowels = lv;
+        }
+    }
 
-    } // time = n - k , space = 1 
-
-    max_vowals
+    max_vowels
 }
 
 
