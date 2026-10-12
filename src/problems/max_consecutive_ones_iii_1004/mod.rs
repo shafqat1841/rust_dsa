@@ -45,8 +45,8 @@ fn sol0(nums: Vec<i32>, k: i32) -> i32 {
     res
 }
 
-// total time = 
-// total space = 
+// total time = N ^ 3
+// total space = 1
 // [1,1,1,0,0,0,1,1,1,1,0] , k = 2 , res = 6
 // [0,0,0,1] , k = 4 , res = 4
 fn sol1(nums: Vec<i32>, k: i32) -> i32 {
@@ -88,13 +88,43 @@ fn sol1(nums: Vec<i32>, k: i32) -> i32 {
     res
 }
 
+// total time = 2n or n
+// total space = 1
+// [1,1,1,0,0,0,1,1,1,1,0] , k = 2 , res = 6
+// [0,0,0,1] , k = 4 , res = 4
+fn sol2(nums: Vec<i32>, k: i32) -> i32 {
+    let mut left = 0;
+    let mut zeros_count = 0;
+    let mut max_len = 0;
+
+    for right in 0..nums.len() {
+        // Expand the window by including nums[right]
+        if nums[right] == 0 {
+            zeros_count += 1;
+        }
+
+        // If zero count exceeds k, contract the window from the left
+        while zeros_count > k {
+            if nums[left] == 0 {
+                zeros_count -= 1;
+            }
+            left += 1;
+        }
+
+        // Update the maximum length found so far
+        max_len = max_len.max((right - left + 1) as i32);
+    }
+
+    max_len
+}
+
 
 struct Solution;
 
 impl Solution {
     #[allow(dead_code)]
     pub fn longest_ones(nums: Vec<i32>, k: i32) -> i32 {
-        sol1(nums,k)
+        sol2(nums,k)
     }
 }
 
