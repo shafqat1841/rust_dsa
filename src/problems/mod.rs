@@ -14,3 +14,4 @@ mod max_number_of_k_sum_pairs_1679;
 mod maximum_average_subarray_i_643;
 mod maximum_number_of_vowels_in_a_substring_of_given_length_1456;
 mod max_consecutive_ones_iii_1004;
+mod longest_subarray_of_1s_after_deleting_one_element_1493;

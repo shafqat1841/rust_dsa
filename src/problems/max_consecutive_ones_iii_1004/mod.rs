@@ -3,48 +3,6 @@
 #![allow(dead_code)]
 #![allow(unused)]
 
-// total time = 
-// total space = 
-// [1,1,1,0,0,0,1,1,1,1,0] , k = 2 , res = 6
-fn sol0(nums: Vec<i32>, k: i32) -> i32 {
-    let mut res = 0;
-    
-    let mut limit = k;
-    
-    let mut count = 0;
-
-    let mut i = 0;
-    let len = nums.len();
-
-    while i < len {
-        let ele = nums[i];
-        
-        // [0,0,1,0,1,0,0,1] , k = 1 , res = 3
-        // res = 2 , limit = 0 , count = 1
-        // i = 4 , ele = 1
-        if ele == 1 {
-            count += 1;
-            i += 1;
-        } else if limit > 0 {
-            count += 1;
-            limit -= 1;
-            i += 1;
-        } else {
-            
-            if count > res {
-                res = count;
-            }
-
-            limit = k;
-            count = 0;
-    
-        }
-
-    }
-
-    res
-}
-
 // total time = N ^ 3
 // total space = 1
 // [1,1,1,0,0,0,1,1,1,1,0] , k = 2 , res = 6
@@ -109,11 +67,11 @@ fn sol2(nums: Vec<i32>, k: i32) -> i32 {
                 zeros_count -= 1;
             }
             left += 1;
-        }
+        } // worst case time = left < n < right , space = 1
 
         // Update the maximum length found so far
         max_len = max_len.max((right - left + 1) as i32);
-    }
+    } // time = n , space = 1
 
     max_len
 }
