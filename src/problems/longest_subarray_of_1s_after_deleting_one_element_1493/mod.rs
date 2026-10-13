@@ -55,11 +55,11 @@ fn sol1(nums: Vec<i32>) -> i32 {
     }
     right += 1;
 } // time = n and space = 1
+
+size as i32
+}
 // total time = 2n or n
 // total space = 1
-
-   size as i32
-}
 
 fn sol2(nums: Vec<i32>) -> i32 {
     let mut max_len = 0;
@@ -70,22 +70,22 @@ fn sol2(nums: Vec<i32>) -> i32 {
         if num == 1 {
             curr_len += 1;
         } else {
-            // We hit a zero: combine previous segment and current segment
             max_len = max_len.max(prev_len + curr_len);
             prev_len = curr_len;
             curr_len = 0;
         }
-    }
+    } // time = n , space = 1
 
-    // Handle edge case where the array has no zeros (e.g., [1, 1, 1])
-    // We must delete one element, so we subtract 1.
     max_len = max_len.max(prev_len + curr_len);
+
     if max_len == nums.len() as i32 {
         max_len - 1
     } else {
         max_len
     }
 }
+// total time = n
+// total space = 1
 
 struct Solution;
 
