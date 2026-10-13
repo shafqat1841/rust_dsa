@@ -49,6 +49,17 @@ fn sol1(gain: Vec<i32>) -> i32 {
 // total time = n
 // total space = 1
 
+fn sol2(gain: Vec<i32>) -> i32 {
+    gain.iter()
+        .scan(0, |altitude, &g| {
+            *altitude += g;
+            Some(*altitude)
+        })
+        .max()
+        .unwrap_or(0)
+        .max(0) // Ensuring 0 is considered since trip starts at altitude 0
+}
+
 struct Solution;
 
 #[allow(dead_code)]
