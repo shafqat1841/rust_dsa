@@ -30,6 +30,7 @@
 
 // 11 ans
 
+// accepted
 fn sol1(gain: Vec<i32>) -> i32 {
     let mut heighest = 0;
     
@@ -49,6 +50,7 @@ fn sol1(gain: Vec<i32>) -> i32 {
 // total time = n
 // total space = 1
 
+// another solution in rust idomatic way 
 fn sol2(gain: Vec<i32>) -> i32 {
     gain.iter()
         .scan(0, |altitude, &g| {

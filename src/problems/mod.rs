@@ -20,3 +20,4 @@ mod max_consecutive_ones_iii_1004;
 mod longest_subarray_of_1s_after_deleting_one_element_1493;
 // Prefix Sum
 mod find_the_highest_altitude_1732;
+mod find_pivot_index_724;
