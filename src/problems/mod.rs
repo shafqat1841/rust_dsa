@@ -27,3 +27,4 @@ mod find_pivot_index_724;
 
 //Hash Map / Set
 mod find_the_difference_of_two_arrays_2215;
+mod unique_number_of_occurrences_1207;

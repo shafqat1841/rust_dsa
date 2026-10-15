@@ -67,6 +67,7 @@ fn sol1(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<Vec<i32>> {
 
 // [1,2,3,3] , [1,1,2,2] = [[3],[]] 
 
+// accepted
 fn sol2(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<Vec<i32>> {
     let mut res = Vec::<Vec<i32>>::new();
 
@@ -126,6 +127,7 @@ fn sol2(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<Vec<i32>> {
 }
 // total time = 2n + m => n + m , total space = 2n + 2m => n + m
 
+// accepted
 fn sol3(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<Vec<i32>> {
     let map1: HashSet<i32> = nums1.into_iter().collect(); // time = n , space = n
     let map2: HashSet<i32> = nums2.into_iter().collect(); // time = m , space = m
