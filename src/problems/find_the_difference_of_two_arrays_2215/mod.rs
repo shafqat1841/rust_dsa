@@ -124,15 +124,25 @@ fn sol2(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<Vec<i32>> {
     
     res
 }
+// total time = 2n + m => n + m , total space = 2n + 2m => n + m
 
-// total time = 3n , total space = 2n + 2m
+fn sol3(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<Vec<i32>> {
+    let map1: HashSet<i32> = nums1.into_iter().collect(); // time = n , space = n
+    let map2: HashSet<i32> = nums2.into_iter().collect(); // time = m , space = m
+    
+    let diff1: Vec<i32> = map1.difference(&map2).cloned().collect(); // time = n , space = n
+    let diff2: Vec<i32> = map2.difference(&map1).cloned().collect(); // time = m , space = m
+    
+    vec![diff1,diff2]
+}
+// total time = 2n + 2m => n + m , total space = 2n + 2m => n + m
 
 struct Solution;
 
 #[allow(dead_code)]
 impl Solution {
     pub fn find_difference(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<Vec<i32>> {
-        sol2(nums1,nums2)
+        sol3(nums1,nums2)
     }
 }
 
@@ -144,7 +154,7 @@ mod find_the_difference_of_two_arrays_2215_tests {
     fn main() {
         let input =  [1,2,3].to_vec();
         let input2 =  [3,4,5].to_vec();
-        let res = [[1,2],[4,5]].to_vec();
+        let res = [[2,1],[4,5]].to_vec();
         let output = Solution::find_difference(input,input2);
         assert_eq!(output,res)
     }
