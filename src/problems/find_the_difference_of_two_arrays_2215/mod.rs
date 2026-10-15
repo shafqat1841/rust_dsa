@@ -4,12 +4,12 @@
 #![allow(unused)]
 
 use std::collections::HashSet;
-// [1,2,3] , [3,4,5] = [[1,2],[4,5]]
 // [1,1,3,3,2] , [1,2,2] = [[3],[]]
 // [] , [1,2] = [[],[1,2]]
 // [1,2] , [] = [[1,2],[]]
 // [] , [] = [[],[]]
 // [1,2,3] , [4,5,6] = [[1,2,3],[4,5,6]]
+// [1,2,3] , [3,3,4,5] = [[1,2],[4,5]]
 
 // accepted
 fn sol1(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<Vec<i32>> {
@@ -17,28 +17,31 @@ fn sol1(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<Vec<i32>> {
 
     let mut map1: HashSet<i32> = HashSet::new();
     let mut map2: HashSet<i32> = HashSet::new();
+    let mut map3: HashSet<i32> = HashSet::new();
 
     for val in nums1.iter() {
         map1.insert(*val);
     }
 
     for val in nums2.iter() {
-        if !map1.contains(val) {
+        if map1.contains(val) {
             map2.insert(*val);
         }
     }
-
+    
     let mut vec1 = Vec::<i32>::new();
     for val in nums1.iter() {
-        if map1.contains(val) {
+        if !map2.contains(val) && !map3.contains(val) {
             vec1.push(*val);
+            map3.insert(*val);
         }
     }
-
+    
     let mut vec2 = Vec::<i32>::new();
     for val in nums2.iter() {
-        if map1.contains(val) {
+        if !map2.contains(val) && !map3.contains(val) {
             vec2.push(*val);
+            map3.insert(*val);
         }
     }
 
