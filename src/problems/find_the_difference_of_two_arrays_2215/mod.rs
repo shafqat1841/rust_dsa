@@ -15,6 +15,59 @@ use std::collections::HashSet;
 fn sol1(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<Vec<i32>> {
     let mut res = Vec::<Vec<i32>>::new();
 
+    let mut map1: HashSet<i32> = HashSet::new(); // time = 1 , space = 1
+    let mut map2: HashSet<i32> = HashSet::new(); // time = 1 , space = 1
+    let mut map3: HashSet<i32> = HashSet::new(); // time = 1 , space = 1
+
+    for val in nums1.iter() {
+        map1.insert(*val);
+    } // time = n , space = n
+
+    
+    for val in nums2.iter() {
+        if map1.contains(val) {
+            map2.insert(*val);
+        }
+    } // time = m , space = m
+    
+    
+    
+    let mut vec1 = Vec::<i32>::new();
+    for val in nums1.iter() {
+        if !map2.contains(val) && !map3.contains(val) {
+            vec1.push(*val);
+            map3.insert(*val);
+        }
+    } // time = n , space = 2n
+    
+    let mut vec2 = Vec::<i32>::new();
+    for val in nums2.iter() {
+        if !map2.contains(val) && !map3.contains(val) {
+            vec2.push(*val);
+            map3.insert(*val);
+        }
+    } // time = m , space = 2m
+    
+    res.push(vec1); // time = 1 , space = 2n
+    res.push(vec2); // time = 1 , space = 2m
+    
+    res
+}
+// total time = 2n + 2m
+// total space = 5n + 5m
+
+
+
+// [1,1,3,3,2] , [1,2,2] = [[3],[]]
+// [] , [1,2] = [[],[1,2]]
+// [1,2] , [] = [[1,2],[]]
+// [] , [] = [[],[]]
+// [1,2,3] , [4,5,6] = [[1,2,3],[4,5,6]]
+// [1,2,3] , [3,3,4,5] = [[1,2],[4,5]]
+
+fn sol2(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<Vec<i32>> {
+    let mut res = Vec::<Vec<i32>>::new();
+
     let mut map1: HashSet<i32> = HashSet::new();
     let mut map2: HashSet<i32> = HashSet::new();
     let mut map3: HashSet<i32> = HashSet::new();
@@ -50,6 +103,7 @@ fn sol1(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<Vec<i32>> {
 
     res
 }
+
 // total time = n
 // total space = 1
 
@@ -58,7 +112,7 @@ struct Solution;
 #[allow(dead_code)]
 impl Solution {
     pub fn find_difference(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<Vec<i32>> {
-        sol1(nums1,nums2)
+        sol2(nums1,nums2)
     }
 }
 
