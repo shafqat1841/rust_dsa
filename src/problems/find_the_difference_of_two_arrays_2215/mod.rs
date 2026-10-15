@@ -65,47 +65,67 @@ fn sol1(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<Vec<i32>> {
 // [1,2,3] , [4,5,6] = [[1,2,3],[4,5,6]]
 // [1,2,3] , [3,3,4,5] = [[1,2],[4,5]]
 
+// [1,2,3,3] , [1,1,2,2] = [[3],[]] 
+
 fn sol2(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<Vec<i32>> {
     let mut res = Vec::<Vec<i32>>::new();
 
     let mut map1: HashSet<i32> = HashSet::new();
     let mut map2: HashSet<i32> = HashSet::new();
-    let mut map3: HashSet<i32> = HashSet::new();
 
-    for val in nums1.iter() {
-        map1.insert(*val);
+    let len1 = nums1.len();
+    let len2 = nums2.len();
+
+    let mut max_len = len1;
+
+    if len2 > len1 {
+        max_len = len2;
     }
 
-    for val in nums2.iter() {
-        if map1.contains(val) {
-            map2.insert(*val);
+    let mut i = 0;
+    while i < max_len {
+
+        if i < len1 {
+            let ele1 = nums1[i];
+            map1.insert(ele1);
         }
-    }
-    
+
+
+        if i < len2 {
+            let ele2 = nums2[i];
+            map2.insert(ele2);
+        }
+        
+
+        i += 1;
+        
+    } // time = n , space = n + m
+
     let mut vec1 = Vec::<i32>::new();
-    for val in nums1.iter() {
-        if !map2.contains(val) && !map3.contains(val) {
-            vec1.push(*val);
-            map3.insert(*val);
-        }
-    }
-    
     let mut vec2 = Vec::<i32>::new();
-    for val in nums2.iter() {
-        if !map2.contains(val) && !map3.contains(val) {
-            vec2.push(*val);
-            map3.insert(*val);
-        }
-    }
 
+    for val in &map1 {
+        if !map2.contains(val) {
+            vec1.push(*val)
+        }  
+    } // time = n , space = n
+
+    
+    for val in &map2 {
+        if !map1.contains(val) {
+            vec2.push(*val)
+        }  
+    } // time = m , space = m
+    
+    
+    
     res.push(vec1);
     res.push(vec2);
-
+    
     res
 }
 
-// total time = n
-// total space = 1
+// total time = 3n , total space = 2n + 2m
 
 struct Solution;
 
