@@ -121,7 +121,7 @@ fn sol1(word1: String, word2: String) -> bool {
 // w1 = "abbbzcf" , w2 = "babzzcz"
 // res = false
 
-// accepted
+// accepted but not optimized
 fn sol2(word1: String, word2: String) -> bool {
 
     if word1.len() != word2.len() {
@@ -205,12 +205,43 @@ fn sol2(word1: String, word2: String) -> bool {
 // total time = 
 // total space = 
 
+fn sol3(word1: String, word2: String) -> bool {
+    if word1.len() != word2.len() {
+        return false;
+    }
+
+    let mut count1 = [0; 26];
+    let mut count2 = [0; 26];
+
+    // Populate frequency arrays in O(N) time with zero heap allocations
+    for b in word1.bytes() {
+        count1[(b - b'a') as usize] += 1;
+    }
+
+    for b in word2.bytes() {
+        count2[(b - b'a') as usize] += 1;
+    }
+
+    // Verify that both strings contain the exact same unique set of characters
+    for i in 0..26 {
+        if (count1[i] == 0) != (count2[i] == 0) {
+            return false;
+        }
+    }
+
+    // Sort the frequency counts to check if the distributions match
+    count1.sort_unstable();
+    count2.sort_unstable();
+
+    count1 == count2
+}
+
 struct Solution;
 
 #[allow(dead_code)]
 impl Solution {
     pub fn close_strings(word1: String, word2: String) -> bool {
-        sol2(word1, word2)
+        sol3(word1, word2)
     }
 }
 
