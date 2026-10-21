@@ -144,7 +144,7 @@ fn sol2(word1: String, word2: String) -> bool {
         } else {
             map1.insert(ele,1);
         }
-    }
+    } // time = n , space = n
     
     
     for i in 0..word2_bytes.len() {
@@ -157,7 +157,7 @@ fn sol2(word1: String, word2: String) -> bool {
         } else {
             map2.insert(ele,1);
         }
-    }
+    } // time = m , space = m
 
     if map1.len() != map2.len() {
         return false;
@@ -179,7 +179,7 @@ fn sol2(word1: String, word2: String) -> bool {
         } else {
             map3.insert(*value, 1);
         }
-    }
+    } // time = k , space = k
 
     for val in map2.values() {
         if !map3.contains_key(val) {
@@ -194,47 +194,55 @@ fn sol2(word1: String, word2: String) -> bool {
         } else {
             map3.insert(*val, new_v);
         }
-    }
+    } // time = k , space = 1
+
+    // time = n , space = k
+    // time = m , space = k
+    // time = k , space = k
+    // time = k , space = 1
+
     
     if map3.len() > 0 {
         return false;
     }
-
-   true
+    
+    true
 }
-// total time = 
-// total space = 
+// total time = n + m + 2k => n 
+// total space = 3k=> 1
 
 fn sol3(word1: String, word2: String) -> bool {
     if word1.len() != word2.len() {
         return false;
     }
 
-    let mut count1 = [0; 26];
-    let mut count2 = [0; 26];
+    let mut count1 = [0; 26]; // time = 1 , space = 1
+    let mut count2 = [0; 26]; // time = 1 , space = 1
 
     // Populate frequency arrays in O(N) time with zero heap allocations
     for b in word1.bytes() {
         count1[(b - b'a') as usize] += 1;
-    }
+    } // time = n , space = 1
 
     for b in word2.bytes() {
         count2[(b - b'a') as usize] += 1;
-    }
+    } // time = m , space = 1
 
     // Verify that both strings contain the exact same unique set of characters
     for i in 0..26 {
         if (count1[i] == 0) != (count2[i] == 0) {
             return false;
         }
-    }
+    } // time = 1 , space = 1
 
     // Sort the frequency counts to check if the distributions match
-    count1.sort_unstable();
-    count2.sort_unstable();
+    count1.sort_unstable(); // time = k log k => 1 , space = 1
+    count2.sort_unstable(); // time = k log k => 1 , space = 1
 
-    count1 == count2
+    count1 == count2 // time = 1, space = 1
 }
+// total time = n + m => n 
+// total space = 1
 
 struct Solution;
 
