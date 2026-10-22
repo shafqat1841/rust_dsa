@@ -29,3 +29,4 @@ mod find_pivot_index_724;
 mod find_the_difference_of_two_arrays_2215;
 mod unique_number_of_occurrences_1207;
 mod determine_if_two_strings_are_close_1657;
+mod equal_row_and_column_pairs_2352;
