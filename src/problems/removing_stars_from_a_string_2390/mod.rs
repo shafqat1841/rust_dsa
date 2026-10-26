@@ -20,17 +20,48 @@ fn sol1(s: String) -> String {
             res_bytes.push(ele);
         }
 
-    }
+    } // time = n , space = n
 
     String::from_utf8(res_bytes).unwrap()
 }
+// total time = n
+// total space = n
+
+// let input =  "sha*fq*at".to_string();
+// let res = "shfat".to_string();   
+
+// accepted and optimized
+fn sol2(s: String) -> String {
+    let mut s = s.into_bytes();
+    let mut write = 0;
+
+    for i in 0..s.len() {
+        let ele = s[i];
+
+        if ele == b'*' {
+            if write > 0 {
+                write -= 1;
+            }
+        } else {
+            s[write] = ele;
+            write += 1;
+        }
+
+    } // time = n , space = 1
+
+    s.truncate(write);
+
+    String::from_utf8(s).unwrap()
+}
+// total time = n
+// total space = 1
 
 struct Solution;
 
 #[allow(dead_code)]
 impl Solution {
     pub fn remove_stars(s: String) -> String {
-        sol1(s)
+        sol2(s)
     }
 }
 
