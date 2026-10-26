@@ -5,7 +5,7 @@
 
 
 // accepted
-fn sol2(asteroids: Vec<i32>) -> Vec<i32> {
+fn sol1(asteroids: Vec<i32>) -> Vec<i32> {
     let mut stack: Vec<i32> = Vec::new();
     
     for &ast in &asteroids {
@@ -39,7 +39,7 @@ struct Solution;
 #[allow(dead_code)]
 impl Solution {
     pub fn asteroid_collision(asteroids: Vec<i32>) -> Vec<i32> {
-        sol2(asteroids)
+        sol1(asteroids)
     }
 }
 
