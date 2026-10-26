@@ -27,8 +27,8 @@ mod decode_string_394_tests {
 
     #[test]
     fn main() {
-        let input = "".to_string()
-        let res = "".to_string()
+        let input = "".to_string();
+        let res = "".to_string();
         let output = Solution::decode_string(input);
         assert_eq!(output,res)
     }
