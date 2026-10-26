@@ -3,9 +3,26 @@
 #![allow(dead_code)]
 #![allow(unused)]
 
-//
+// accepted
 fn sol1(s: String) -> String {
-    "".to_string()
+    let s = s.as_bytes();
+
+    let mut res_bytes = Vec::<u8>::new();
+
+    for i in 0..s.len() {
+        let ele = s[i];
+
+        if ele == b'*' {
+            if !res_bytes.is_empty() {
+                res_bytes.pop();
+            }
+        } else {
+            res_bytes.push(ele);
+        }
+
+    }
+
+    String::from_utf8(res_bytes).unwrap()
 }
 
 struct Solution;
@@ -23,8 +40,8 @@ mod removing_stars_from_a_string_2390_tests {
 
     #[test]
     fn main() {
-        let input =  "".to_string();
-        let res = "".to_string();
+        let input =  "sha*fq*at".to_string();
+        let res = "shfat".to_string();
         let output = Solution::remove_stars(input);
         assert_eq!(output,res)
     }
