@@ -4,73 +4,88 @@
 #![allow(unused)]
 
 
-// "2[e]2[a2[b2[c]]]2[d]gh"
-// "eeabccbccabccbccgh"
-
-// "2[a2[b2[c]]]"
-// "abccbccabccbcc"
-
-
 fn is_match_number(ele: u8) -> bool {
     let same = matches!(ele, b'0' | b'1' | b'2' | b'3' | b'4' | b'5' | b'6' | b'7' | b'8' | b'9');
     same
-}
+} 
+// total time = 1 
+// total space = 10 => 1
 
-// 2[c]
-// 2[c2[b]]
-fn decode(bytes: &[u8], mut i: usize) -> (Vec<u8>,usize) {
+fn make_new_cha(bytes: &[u8], mut i: usize) -> (Vec<u8>,usize)  {
     let mut new_cha = Vec::<u8>::new();
-    let mut sub_bytes = Vec::<u8>::new();
 
-    let mut number = i;
-    let mut start = i + 2;
+     let mut index = i + 1;
 
-    while bytes[start] != b']' {
-        if is_match_number(bytes[start]) {
-            let (new_sub_part,new_index) = decode(bytes,start);
-            for val in new_sub_part {
-                new_cha.push(val);
-            }
-            start = new_index;
-        } else {
-            new_cha.push(bytes[start]);
-            start += 1;
+    while index < bytes.len() && bytes[index] != b']' {
+        if !is_match_number(bytes[index]) {
+            new_cha.push(bytes[index]);
+            index += 1;
+            continue;
         }
+
+        let (new_sub_part,new_index) = decode(bytes, index);
+        for val in new_sub_part {
+            new_cha.push(val);
+        }
+
+        index = new_index;
     }
 
-    while number > 0 {
+    (new_cha, index + 1)
+
+
+}
+
+fn decode(bytes: &[u8], mut i: usize) -> (Vec<u8>,usize) {
+    let mut sub_bytes = Vec::<u8>::new();
+
+    let mut num_i = i;
+    let mut numbers_bytes = Vec::<u8>::new();
+    
+    while num_i < bytes.len() && is_match_number(bytes[num_i]) {
+        let ele = bytes[num_i];
+        numbers_bytes.push(ele);
+        num_i += 1;
+    }
+
+    
+    let number_string = String::from_utf8(numbers_bytes).unwrap();
+    let mut num: u32 = number_string.parse().unwrap();
+
+    let  (new_cha, new_index) = make_new_cha(bytes, num_i);
+    
+    while num > 0 {
           for &val in &new_cha { 
               sub_bytes.push(val);    
           }
 
-          number -= 1;
+          num -= 1;
     }
 
-    (sub_bytes,i)
+    (sub_bytes, new_index)
 }
 
-// 
 fn sol1(s: String) -> String {
     let s = s.as_bytes();
 
      let mut new_bytes = Vec::<u8>::new();
 
      let mut i = 0;
-
+     
      while i < s.len() {
          let ele = s[i];
-
+         
          if !is_match_number(ele) {
              new_bytes.push(ele);
              i += 1;
              continue;
-         } 
-
-         let (sub_bytes,new_index) = decode(s,i);
-
-         for val in sub_bytes {
-            new_bytes.push(val);
-         }
+            } 
+            
+            let (sub_bytes,new_index) = decode(s,i);
+            
+            for val in sub_bytes {
+                new_bytes.push(val);
+            }
 
          i = new_index;
 
@@ -99,8 +114,14 @@ mod decode_string_394_tests {
 
     #[test]
     fn main() {
-        let input = "2[e]2[a2[b2[c]]]2[d]gh".to_string();
-        let res = "eeabccbccabccbccgh".to_string();
+        // let input = "2[e]2[a2[b2[c]]]2[d]gh".to_string();
+        let input = "100[leetcode]".to_string();
+        let mut array = Vec::<String>::new();
+        for _ in 0..100 {
+            array.push("leetcode".to_string());
+        }
+        let array_joined = array.join("");
+        let res = array_joined;
         let output = Solution::decode_string(input);
         assert_eq!(output,res)
     }
