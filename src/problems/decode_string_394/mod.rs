@@ -95,6 +95,39 @@ fn sol1(s: String) -> String {
 
 
 }
+
+fn sol2(s: String) -> String  {
+    let mut count_stack: Vec<usize> = Vec::new();
+    let mut string_stack: Vec<String> = Vec::new();
+    let mut current_string = String::new();
+    let mut k: usize = 0;
+
+    for c in s.chars() {
+        if c.is_digit(10) {
+            // Build multi-digit numbers (e.g., '3', '0', '0' -> 300)
+            k = k * 10 + c.to_digit(10).unwrap() as usize;
+        } else if c == '[' {
+            // Save current state onto the stacks and reset for the inner block
+            count_stack.push(k);
+            string_stack.push(current_string);
+            current_string = String::new();
+            k = 0;
+        } else if c == ']' {
+            // Pop the previous context and repeat the current string
+            let repeat_count = count_stack.pop().unwrap();
+            let mut prev_string = string_stack.pop().unwrap();
+            
+            prev_string.push_str(&current_string.repeat(repeat_count));
+            current_string = prev_string;
+        } else {
+            // Accumulate regular characters
+            current_string.push(c);
+        }
+    }
+
+    current_string
+}
+
 // total time = 
 // total space = 
 
@@ -103,7 +136,7 @@ struct Solution;
 #[allow(dead_code)]
 impl Solution {
     pub fn decode_string(s: String) -> String {
-        sol1(s)
+        sol2(s)
     }
 }
 
