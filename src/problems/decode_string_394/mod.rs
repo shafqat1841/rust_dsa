@@ -3,6 +3,8 @@
 #![allow(dead_code)]
 #![allow(unused)]
 
+mod solution3;
+
 
 fn is_match_number(ele: u8) -> bool {
     let same = matches!(ele, b'0' | b'1' | b'2' | b'3' | b'4' | b'5' | b'6' | b'7' | b'8' | b'9');
@@ -127,16 +129,17 @@ fn sol2(s: String) -> String  {
 
     current_string
 }
-
 // total time = 
 // total space = 
+
 
 struct Solution;
 
 #[allow(dead_code)]
 impl Solution {
     pub fn decode_string(s: String) -> String {
-        sol2(s)
+        // sol2(s)
+        solution3::sol3(s)
     }
 }
 
