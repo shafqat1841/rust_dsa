@@ -23,13 +23,12 @@ impl RecentCounter {
         self.deque.push_front(t);
         
         let lower_limit = t - 3000;
-        let upper_limit = t;
 
         loop {
 
             let last = self.deque.back().unwrap();
 
-            if *last >= lower_limit && *last <= upper_limit {
+            if *last >= lower_limit {
                 break;
             } 
 
