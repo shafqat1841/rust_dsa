@@ -25,11 +25,16 @@ impl RecentCounter {
         let lower_limit = t - 3000;
         let upper_limit = t;
 
-        for _ in 0..self.deque.len() {
+        loop {
+
             let last = self.deque.back().unwrap();
-            if *last < lower_limit || *last > upper_limit {
-                self.deque.pop_back();
-            }
+
+            if *last >= lower_limit && *last <= upper_limit {
+                break;
+            } 
+
+            self.deque.pop_back();
+
         }
 
         self.deque.len() as i32
