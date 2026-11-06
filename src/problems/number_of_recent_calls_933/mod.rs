@@ -12,7 +12,7 @@ struct RecentCounter {
 #[allow(dead_code)]
 impl RecentCounter {
     fn new() -> Self {
-        let deque = VecDeque::new();
+        let deque = VecDeque::with_capacity(10000);
         RecentCounter {
             deque
         }
