@@ -25,25 +25,14 @@ impl RecentCounter {
         let lower_limit = t - 3000;
         let upper_limit = t;
 
-        let mut count = 0;
-        let mut remove_ele_count = 0;
-        
-        for i in 0..self.deque.len() {
-            let ele = self.deque[i];
-
-            if ele >= lower_limit && ele <= upper_limit {
-                count += 1;
-            } else {
-                remove_ele_count += 1;
+        for _ in 0..self.deque.len() {
+            let last = self.deque.back().unwrap();
+            if *last < lower_limit || *last > upper_limit {
+                self.deque.pop_back();
             }
         }
 
-        while remove_ele_count > 0 {
-            self.deque.pop_back();
-            remove_ele_count -= 1;
-        }
-
-        count
+        self.deque.len() as i32
     }
 }
 
