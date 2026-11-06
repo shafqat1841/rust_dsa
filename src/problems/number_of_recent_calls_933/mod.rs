@@ -3,16 +3,47 @@
 #![allow(dead_code)]
 #![allow(unused)]
 
-struct RecentCounter {};
+use std::collections::VecDeque;
+
+struct RecentCounter {
+    deque: VecDeque<i32>,
+}
 
 #[allow(dead_code)]
 impl RecentCounter {
     fn new() -> Self {
-        
+        let deque = VecDeque::new();
+        RecentCounter {
+            deque
+        }
     }
     
-    fn ping(&self, t: i32) -> i32 {
+    fn ping(&mut self, t: i32) -> i32 {
+
+        self.deque.push_front(t);
         
+        let lower_limit = t - 3000;
+        let upper_limit = t;
+
+        let mut count = 0;
+        let mut remove_ele_count = 0;
+        
+        for i in 0..self.deque.len() {
+            let ele = self.deque[i];
+
+            if ele >= lower_limit && ele <= upper_limit {
+                count += 1;
+            } else {
+                remove_ele_count += 1;
+            }
+        }
+
+        while remove_ele_count > 0 {
+            self.deque.pop_back();
+            remove_ele_count -= 1;
+        }
+
+        count
     }
 }
 
@@ -23,16 +54,24 @@ mod number_of_recent_calls_933_tests {
 
     #[test]
     fn main() {
-        // let input = "2[e]2[a2[b2[c]]]2[d]gh".to_string();
-        // let input = "100[leetcode]".to_string();
-        // let mut array = Vec::<String>::new();
-        // for _ in 0..100 {
-        //     array.push("leetcode".to_string());
-        // }
-        // let array_joined = array.join("");
-        // let res = array_joined;
-        // let output = Solution::decode_string(input);
-        // assert_eq!(output,res)
+        let mut dq = RecentCounter::new();
+        
+        let res_1 = dq.ping(1);
+        let output_1 = 1;
+        assert_eq!(output_1, res_1);
+        
+        let res_2 = dq.ping(100);
+        let output_2 = 2;
+        assert_eq!(output_2, res_2);
+
+        let res_3 = dq.ping(3001);
+        let output_3 = 3;
+        assert_eq!(output_3, res_3);
+
+        let res_4 = dq.ping(3002);
+        let output_4 = 3;
+        assert_eq!(output_4, res_4);
+
     }
 
 }
