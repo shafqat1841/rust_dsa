@@ -17,27 +17,28 @@ impl RecentCounter {
             deque
         }
     }
+    // total time = 1
+    // total space = 1
     
     fn ping(&mut self, t: i32) -> i32 {
 
-        self.deque.push_front(t);
+        self.deque.push_back(t); // time = 1 , space = n 
         
         let lower_limit = t - 3000;
 
-        loop {
-
-            let last = self.deque.back().unwrap();
-
-            if *last >= lower_limit {
+        while let Some(&front) = self.deque.front() {
+            if front >= lower_limit {
                 break;
-            } 
+            }
 
-            self.deque.pop_back();
-
+            self.deque.pop_front();
         }
+        // time = n , space = 1
 
         self.deque.len() as i32
     }
+    // total time = n
+    // total space = n
 }
 
 #[cfg(test)]
