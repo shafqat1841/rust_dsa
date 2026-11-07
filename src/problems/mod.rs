@@ -36,5 +36,6 @@ mod removing_stars_from_a_string_2390;
 mod asteroid_collision_735;
 mod decode_string_394;
 
-//
+// Queue
 mod number_of_recent_calls_933;
+mod dota2_senate_649;
