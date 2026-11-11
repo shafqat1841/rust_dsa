@@ -4,22 +4,6 @@
 #![allow(unused)]
 
 use std::collections::VecDeque;
-
-    // RDDDRDRR , R = 4 , D = 4 , R_r = 0 , D_r = 0
-    // R DDDRDRR , R = 4 , D = 4 , R_r = 1 , D_r = 0
-    // R DDRDRR , R = 4 , D = 3 , R_r = 0 , D_r = 0
-    // RD DRDRR , R = 4 , D = 3 , R_r = 0 , D_r = 1
-    // RDD RDRR , R = 4 , D = 3 , R_r = 0 , D_r = 2
-    // RDD DRR , R = 3 , D = 3 , R_r = 0 , D_r = 1
-    // RDDD RR , R = 3 , D = 3 , R_r = 0 , D_r = 2
-    // RDDD R , R = 2 , D = 3 , R_r = 0 , D_r = 1
-    // RDDD , R = 1 , D = 3 , R_r = 0 , D_r = 0
-    // R DDD , R = 1 , D = 3 , R_r = 1 , D_r = 0
-    // R DD , R = 1 , D = 2 , R_r = 0 , D_r = 0
-    // RD D , R = 1 , D = 2 , R_r = 0 , D_r = 1
-    // RDD , R = 1 , D = 2 , R_r = 0 , D_r = 2
-    // DD , R = 0 , D = 2 , R_r = 0 , D_r = 1
-
     
     // RDDDRDRR , R = 4 , D = 4 , R_r = 0 , D_r = 0
     // DDDRDRRR , R = 4 , D = 4 , R_r = 1 , D_r = 0
@@ -85,7 +69,7 @@ fn sol1(senate: String) -> String {
             }
         }
 
-    } // time = r + d , space = 1
+    } // time = r + d => n , space = 1
     // where r is the numbers of Radiant voters 
     // and where d is the numbers of Dire voters
 
@@ -97,7 +81,7 @@ fn sol1(senate: String) -> String {
     
 }
 
-// total time = n + r + d
+// total time = n + n => 2n
 // total space = n
 
 struct Solution;
@@ -122,89 +106,3 @@ mod dota2_senate_649_tests {
     }
 
 }
-
- // RDDDRDR
-        // R|DDDRDR = RD|DRDR
-        // RD|DRDR  = DD|RDR
-        // DD|RDR   = DDD|R
-        // DDD|R    = DDD    
-        
-
-        // RDDDRRD
-        // RDDRRD
-        // DDRRD
-        // DDRD
-        // DRD
-        // DD
-        
-        // RDDDRD
-        // RDDRD
-        // DDRD
-        // DDD
-
-         // RRDDDRDDD
-         // R|RDDDRDDD = RR|DDRDDD
-         // RR|DDRDDD  = RRD|RDDD
-         // RRD|RDDD   = RDR|DDD
-         // RDR|DDD    = RD|DDR
-         // RD|DDR     = DD|DR
-        //  DD|DR      = DDD|
-        //  DDD|      = DDD
-
-
-        // RDDDRDR
-        // R,DDDRDR = RD,DRDR
-        // RD,DRDR  = DD,RDR
-        // DD,RDR   = DDD,R
-        // DDD,R    = DDD
-
-        // DDRRR
-        // D,DRRR => DRRRD => RRRDD => RRDD
-        // RRDD => RDDR => DDRR => DRR
-        // DRR => RRD => RD
-        // RD => R
-
-        // RDDDRDRR
-        // RDDRDRR
-        // DDRDRR
-        // DDDRR
-        // DDDR
-        // DDR
-        // DD
-
-        // RDDDRDRR , R = 4 , D = 4
-        // RDDRDRR , R = 4 , D = 3
-        // DDRDRR , R = 3 , D = 3
-        // DDDRR , R = 2 , D = 3
-        // DDDR , R = 1 , D = 3
-        // DDR , R = 1 , D = 2
-        // DD , R = 0 , D = 2
-
-        // RDDDRDRR , R = 0 , D = 0
-        // R DDDRDRR , R = 1 , D = 0
-        // R DDRDRR , R = 0 , D = 0
-        // D DRDRR , R = 0 , D = 0
-        // DD RDRR , R = 0 , D = 1
-        // DD DRR , R = 0 , D = 0
-        // DDD RR , R = 0 , D = 1
-        // DDD R , R = 0 , D = 0
-        // DDDR , R = 1 , D = 0
-        //  DDR , R = 0 , D = 0
-        // D DR , R = 0 , D = 1
-        // DD R , R = 0 , D = 2
-        // DD , R = 0 , D = 1
-
-         // RDDDRDRR , R = 4 , D = 4 , R_r = 0 , D_r = 0
-         // R DDDRDRR , R = 4 , D = 4 , R_r = 1 , D_r = 0
-         // R DDRDRR , R = 4 , D = 3 , R_r = 0 , D_r = 0
-         // RD DRDRR , R = 4 , D = 3 , R_r = 0 , D_r = 1
-         // RDD RDRR , R = 4 , D = 3 , R_r = 0 , D_r = 2
-         // RDD DRR , R = 3 , D = 3 , R_r = 0 , D_r = 1
-         // RDDD RR , R = 3 , D = 3 , R_r = 0 , D_r = 2
-         // RDDD R , R = 2 , D = 3 , R_r = 0 , D_r = 1
-         // RDDD , R = 1 , D = 3 , R_r = 0 , D_r = 0
-         // R DDD , R = 1 , D = 3 , R_r = 1 , D_r = 0
-         // R DD , R = 1 , D = 2 , R_r = 0 , D_r = 0
-         // RD D , R = 1 , D = 2 , R_r = 0 , D_r = 1
-         // RDD , R = 1 , D = 2 , R_r = 0 , D_r = 2
-         // DD , R = 0 , D = 2 , R_r = 0 , D_r = 1
