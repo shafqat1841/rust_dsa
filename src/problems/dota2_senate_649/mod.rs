@@ -20,6 +20,7 @@ use std::collections::VecDeque;
     // RDD , R = 1 , D = 2 , R_r = 0 , D_r = 2
     // DD , R = 0 , D = 2 , R_r = 0 , D_r = 1
 
+// accepted 
 fn sol1(senate: String) -> String {
     let senate = senate.as_bytes();
         
@@ -75,15 +76,52 @@ fn sol1(senate: String) -> String {
     } // time = 1 , space = 1
     
 }
-
 // total time = n + n => 2n => n
 // total space = n + n => 2n => n
+
+// accepted
+fn sol2(senate: String) -> String {
+    let n = senate.len();
+
+    let mut radiant = VecDeque::<usize>::new();
+    let mut dire = VecDeque::<usize>::new();
+
+    for (i, &ele) in senate.as_bytes().iter().enumerate() {
+        if ele == b'R' {
+            radiant.push_back(i);
+        } else {
+            dire.push_back(i);
+        }
+    } // time = n , space = n
+
+    while !radiant.is_empty() && !dire.is_empty() {
+        let r = radiant.pop_front().unwrap();
+        let d = dire.pop_front().unwrap();
+
+        if r < d {
+            radiant.push_back(r + n);
+        } else {
+            dire.push_back(d + n);
+        }
+    } // time = n , space = n
+
+    if radiant.is_empty() {
+        "Dire".to_string()
+    } else {
+        "Radiant".to_string()
+    }
+}
+// total time = n + n => 2n => n
+// total space = n + n => 2n => n
+
+
 
 struct Solution;
 
 impl Solution {
     pub fn predict_party_victory(senate: String) -> String {
-        sol1(senate)
+        // sol1(senate)
+        sol2(senate)
     }
 }
 #[cfg(test)]
