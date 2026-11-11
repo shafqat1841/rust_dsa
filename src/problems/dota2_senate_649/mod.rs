@@ -5,106 +5,89 @@
 
 use std::collections::VecDeque;
 
+    // RDDDRDRR , R = 4 , D = 4 , R_r = 0 , D_r = 0
+    // R DDDRDRR , R = 4 , D = 4 , R_r = 1 , D_r = 0
+    // R DDRDRR , R = 4 , D = 3 , R_r = 0 , D_r = 0
+    // RD DRDRR , R = 4 , D = 3 , R_r = 0 , D_r = 1
+    // RDD RDRR , R = 4 , D = 3 , R_r = 0 , D_r = 2
+    // RDD DRR , R = 3 , D = 3 , R_r = 0 , D_r = 1
+    // RDDD RR , R = 3 , D = 3 , R_r = 0 , D_r = 2
+    // RDDD R , R = 2 , D = 3 , R_r = 0 , D_r = 1
+    // RDDD , R = 1 , D = 3 , R_r = 0 , D_r = 0
+    // R DDD , R = 1 , D = 3 , R_r = 1 , D_r = 0
+    // R DD , R = 1 , D = 2 , R_r = 0 , D_r = 0
+    // RD D , R = 1 , D = 2 , R_r = 0 , D_r = 1
+    // RDD , R = 1 , D = 2 , R_r = 0 , D_r = 2
+    // DD , R = 0 , D = 2 , R_r = 0 , D_r = 1
+
+    
+    // RDDDRDRR , R = 4 , D = 4 , R_r = 0 , D_r = 0
+    // DDDRDRRR , R = 4 , D = 4 , R_r = 1 , D_r = 0
+    // DDRDRRR , R = 4 , D = 3 , R_r = 0 , D_r = 0
+    // DRDRRRD , R = 4 , D = 3 , R_r = 0 , D_r = 1
+    // RDRRRDD , R = 4 , D = 3 , R_r = 0 , D_r = 2
+    // DRRRDD , R = 3 , D = 3 , R_r = 0 , D_r = 1
+    // RRRDDD , R = 3 , D = 3 , R_r = 0 , D_r = 2
+    // RRDDD , R = 2 , D = 3 , R_r = 0 , D_r = 1
+    // RDDD , R = 1 , D = 3 , R_r = 0 , D_r = 0
+    // DDDR , R = 1 , D = 3 , R_r = 1 , D_r = 0
+    // DDR , R = 1 , D = 2 , R_r = 0 , D_r = 0
+    // DRD , R = 1 , D = 2 , R_r = 0 , D_r = 1
+    // RDD , R = 1 , D = 2 , R_r = 0 , D_r = 2
+    // DD , R = 0 , D = 2 , R_r = 0 , D_r = 1
+
 fn sol1(senate: String) -> String {
     let senate = senate.as_bytes();
-
+        
     let mut r_num = 0;
     let mut d_num = 0;
+
+    let mut r_remove = 0;
+    let mut d_remove = 0;
 
     let mut remainning = VecDeque::<u8>::new();
 
     for i in 0..senate.len() {
         let ele = senate[i];
-
         if ele == b'R' {
-
             r_num += 1;
-
-            remainning.push_back(ele);
-            
-            
         } else {
-            
             d_num += 1;
-            remainning.push_back(ele);
-
         }
-
+        remainning.push_back(ele);
     }
+
 
     while r_num > 0 && d_num > 0 {
 
-        let ele = remainning.pop_front();
-
-        let ele = match ele {
-            Some(v) => v,
-            None => panic!("Error for pop front of ele in while for both"),
-        };
+        let ele = remainning.pop_front().unwrap();
 
         if ele == b'R' {
-            
-            remainning.push_back(ele);
-
-            let mut not_found = true;
-
-            while not_found {
-                let ele2 = remainning.pop_front();
-
-                let ele2 = match ele2 {
-                    Some(v) => v,
-                    None => panic!("Error for pop front of ele2 in while for b'R'"),
-                };
-
-                if ele2 == b'D' {
-                    d_num -= 1;
-                    not_found = false;
-                } else {
-                    remainning.push_back(ele2);  
-                }
+             if d_remove > 0 {
+                r_num -= 1;
+                d_remove -= 1;
+            } else {
+                r_remove += 1;
+                remainning.push_back(ele);
             }
-            
-            
         } else {
-            
-            remainning.push_back(ele);
-
-            let mut not_found = true;
-
-            while not_found {
-                let ele2 = remainning.pop_front();
-
-
-                let ele2 = match ele2 {
-                    Some(v) => v,
-                    None => panic!("Error for pop front of ele2 in while for b'D'"),
-                };
-
-                if ele2 == b'R' {
-                    r_num -= 1;
-                    not_found = false;
-                } else {
-                    remainning.push_back(ele2);  
-                }
+            if r_remove > 0 {
+                d_num -= 1;
+                r_remove -= 1;
+            } else {
+                d_remove += 1;
+                remainning.push_back(ele);
             }
-            
-
         }
+
     }
 
-    let f_ele = remainning.front();
-
-    let f_ele = match f_ele {
-        Some(v) => v,
-        None => panic!("Error for pop front of f_ele"),
-    };
-
-    if *f_ele == b'R' {
+    if r_num > d_num {
         "Radiant".to_string()        
     } else {
         "Dire".to_string()        
     }
-
-
+    
 }
 
 struct Solution;
@@ -121,7 +104,16 @@ mod dota2_senate_649_tests {
 
     #[test]
     fn main() {
-        // RDDDRDR
+        let input = "RDDDRDR".to_string();
+        let res = Solution::predict_party_victory(input);
+        let output = "Dire".to_string();
+        assert_eq!(output, res);
+
+    }
+
+}
+
+ // RDDDRDR
         // R|DDDRDR = RD|DRDR
         // RD|DRDR  = DD|RDR
         // DD|RDR   = DDD|R
@@ -162,12 +154,47 @@ mod dota2_senate_649_tests {
         // DRR => RRD => RD
         // RD => R
 
-        
-        let input = "RDDDRDR".to_string();
-        let res = Solution::predict_party_victory(input);
-        let output = "Dire".to_string();
-        assert_eq!(output, res);
+        // RDDDRDRR
+        // RDDRDRR
+        // DDRDRR
+        // DDDRR
+        // DDDR
+        // DDR
+        // DD
 
-    }
+        // RDDDRDRR , R = 4 , D = 4
+        // RDDRDRR , R = 4 , D = 3
+        // DDRDRR , R = 3 , D = 3
+        // DDDRR , R = 2 , D = 3
+        // DDDR , R = 1 , D = 3
+        // DDR , R = 1 , D = 2
+        // DD , R = 0 , D = 2
 
-}
+        // RDDDRDRR , R = 0 , D = 0
+        // R DDDRDRR , R = 1 , D = 0
+        // R DDRDRR , R = 0 , D = 0
+        // D DRDRR , R = 0 , D = 0
+        // DD RDRR , R = 0 , D = 1
+        // DD DRR , R = 0 , D = 0
+        // DDD RR , R = 0 , D = 1
+        // DDD R , R = 0 , D = 0
+        // DDDR , R = 1 , D = 0
+        //  DDR , R = 0 , D = 0
+        // D DR , R = 0 , D = 1
+        // DD R , R = 0 , D = 2
+        // DD , R = 0 , D = 1
+
+         // RDDDRDRR , R = 4 , D = 4 , R_r = 0 , D_r = 0
+         // R DDDRDRR , R = 4 , D = 4 , R_r = 1 , D_r = 0
+         // R DDRDRR , R = 4 , D = 3 , R_r = 0 , D_r = 0
+         // RD DRDRR , R = 4 , D = 3 , R_r = 0 , D_r = 1
+         // RDD RDRR , R = 4 , D = 3 , R_r = 0 , D_r = 2
+         // RDD DRR , R = 3 , D = 3 , R_r = 0 , D_r = 1
+         // RDDD RR , R = 3 , D = 3 , R_r = 0 , D_r = 2
+         // RDDD R , R = 2 , D = 3 , R_r = 0 , D_r = 1
+         // RDDD , R = 1 , D = 3 , R_r = 0 , D_r = 0
+         // R DDD , R = 1 , D = 3 , R_r = 1 , D_r = 0
+         // R DD , R = 1 , D = 2 , R_r = 0 , D_r = 0
+         // RD D , R = 1 , D = 2 , R_r = 0 , D_r = 1
+         // RDD , R = 1 , D = 2 , R_r = 0 , D_r = 2
+         // DD , R = 0 , D = 2 , R_r = 0 , D_r = 1
