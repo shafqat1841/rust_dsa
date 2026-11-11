@@ -60,25 +60,33 @@ fn sol1(senate: String) -> String {
 
     while r_num > 0 && d_num > 0 {
 
-        let ele = remainning.pop_front().unwrap();
-
-        if ele == b'R' {
-             if d_remove > 0 {
-                r_num -= 1;
-                d_remove -= 1;
-            } else {
-                r_remove += 1;
-                remainning.push_back(ele);
-            }
-        } else {
-            if r_remove > 0 {
-                d_num -= 1;
-                r_remove -= 1;
-            } else {
-                d_remove += 1;
-                remainning.push_back(ele);
+        match remainning.pop_front() {
+            Some(ele) => {
+                if ele == b'R' {
+                    if d_remove > 0 {
+                        r_num -= 1;
+                        d_remove -= 1;
+                    } else {
+                        r_remove += 1;
+                        remainning.push_back(ele);
+                    }
+                } else {
+                    if r_remove > 0 {
+                        d_num -= 1;
+                        r_remove -= 1;
+                    } else {
+                        d_remove += 1;
+                        remainning.push_back(ele);
+                    }
+                }
+            },
+            None => {
+                panic!("No item remains for processing")
             }
         }
+
+
+        
 
     }
 
