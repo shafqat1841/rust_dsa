@@ -86,6 +86,8 @@ fn sol1(senate: String) -> String {
         }
 
     } // time = r + d , space = 1
+    // where r is the numbers of Radiant voters 
+    // and where d is the numbers of Dire voters
 
     if r_num > d_num {
         "Radiant".to_string()        
