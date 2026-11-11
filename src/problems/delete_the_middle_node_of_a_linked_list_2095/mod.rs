@@ -22,7 +22,41 @@ impl ListNode {
 }
 
 fn sol1(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-    None
+    let mut head = head.unwrap();
+    let mut len = 0;
+    let mut initial_node = head.clone();
+    while let Some(v) = initial_node.next {
+        len += 1;
+        println!("v: {:?}",v);
+        initial_node = v
+    }
+    
+    let half = len / 2;
+    println!("len: {:?}",len);
+    println!("half: {:?}",half);
+
+    let mut count = 0;
+
+    let mut prev: Option<Box<ListNode>> = None;
+    
+    let mut current_node = head.clone();
+    
+    while count < half {
+        if let Some(ref v) =  current_node.next {
+            prev = Some(current_node.clone()); 
+            current_node = v.clone();
+            count += 1;
+        }
+    }
+
+    let mut next = current_node.next;
+    println!("next: {:?}",next);
+
+    prev.as_mut().unwrap().next = next;
+
+    println!("prev: {:?}",prev);
+
+    Some(head)
 }
 
 struct Solution;
