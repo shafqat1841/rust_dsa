@@ -55,7 +55,7 @@ fn sol1(senate: String) -> String {
             d_num += 1;
         }
         remainning.push_back(ele);
-    }
+    } // time = n , space = n
 
 
     while r_num > 0 && d_num > 0 {
@@ -85,18 +85,18 @@ fn sol1(senate: String) -> String {
             }
         }
 
-
-        
-
-    }
+    } // time = r + d , space = 1
 
     if r_num > d_num {
         "Radiant".to_string()        
     } else {
         "Dire".to_string()        
-    }
+    } // time = 1 , space = 1
     
 }
+
+// total time = n + r + d
+// total space = n
 
 struct Solution;
 
