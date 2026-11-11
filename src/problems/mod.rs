@@ -39,3 +39,6 @@ mod decode_string_394;
 // Queue
 mod number_of_recent_calls_933;
 mod dota2_senate_649;
+
+// Linked List
+mod delete_the_middle_node_of_a_linked_list_2095;
