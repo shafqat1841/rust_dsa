@@ -3,7 +3,6 @@
 #![allow(dead_code)]
 #![allow(unused)]
 
-
 // Definition for singly-linked list.
 #[derive(PartialEq, Eq, Clone, Debug)]
 pub struct ListNode {
@@ -21,49 +20,84 @@ impl ListNode {
   }
 }
 
-fn sol1(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-    let mut head = head.unwrap();
-    let mut len = 0;
-    let mut initial_node = head.clone();
-    while let Some(v) = initial_node.next {
-        len += 1;
-        println!("v: {:?}",v);
-        initial_node = v
+fn sol3(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+
+    if let None = head {
+        return None
     }
     
-    let half = len / 2;
-    println!("len: {:?}",len);
-    println!("half: {:?}",half);
+    let mut len = 0;
+    let mut initial_node: Option<&Box<ListNode>> = head.as_ref();
 
-    let mut count = 0;
-
-    let mut prev: Option<Box<ListNode>> = None;
+    println!("initial_node: {:?}", initial_node);
     
-    let mut current_node = head.clone();
+    while let Some(v) = initial_node {
+        
+        let v: &Option<Box<ListNode>> = &v.next; 
+        
+        if let Some(v) = v {
+            len += 1;
+            initial_node = Some(&v);
+        } else {
+            initial_node = None;
+        }
+        
+
+    }
+    
+
+    let half = len / 2;
+    
+    let half = if half > 0 { half - 1 } else { half };
+    
+    let mut count = 0;
+    
+    let mut prev: &mut Option<Box<ListNode>> = &mut head;
     
     while count < half {
-        if let Some(ref v) =  current_node.next {
-            prev = Some(current_node.clone()); 
-            current_node = v.clone();
-            count += 1;
+        if let Some(v) = prev {
+            prev = &mut v.next; 
         }
     }
+    
+    let mut mid: Option<&mut Box<ListNode>> = match prev.as_mut() {
+        None => {
+            return None
+        },
+        Some(v) => {
+            v.next.as_mut()
+        }
+    };
 
-    let mut next = current_node.next;
-    println!("next: {:?}",next);
+    let next = match mid.as_mut() {
+        None => {
+            return None
+        },
+        Some(v) => {
+            v.next.take()
+        }
+    };
 
-    prev.as_mut().unwrap().next = next;
+    match prev.as_mut() {
+        None => {
+            return None
+        },
+         Some(v) => {
+            v.next = next;
+        }
+    };
+    
 
-    println!("prev: {:?}",prev);
 
-    Some(head)
+    prev.take()
 }
 
 struct Solution;
 
 impl Solution {
     pub fn delete_middle(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-        sol1(head)
+        // sol1(head)
+        sol3(head)
     }
 }
 
@@ -71,15 +105,15 @@ fn get_input() -> Option<Box<ListNode>> {
     let mut ln1 = ListNode::new(1);
     let mut ln2 = ListNode::new(3);
     let mut ln3 = ListNode::new(4);
-    let mut ln4 = ListNode::new(7);
-    let mut ln5 = ListNode::new(1);
-    let mut ln6 = ListNode::new(2);
-    let mut ln7 = ListNode::new(6);
+    // let mut ln4 = ListNode::new(7);
+    // let mut ln5 = ListNode::new(1);
+    // let mut ln6 = ListNode::new(2);
+    // let mut ln7 = ListNode::new(6);
     
-    ln6.next = Some(Box::new(ln7));
-    ln5.next = Some(Box::new(ln6));
-    ln4.next = Some(Box::new(ln5));
-    ln3.next = Some(Box::new(ln4));
+    // ln6.next = Some(Box::new(ln7));
+    // ln5.next = Some(Box::new(ln6));
+    // ln4.next = Some(Box::new(ln5));
+    // ln3.next = Some(Box::new(ln4));
     ln2.next = Some(Box::new(ln3));
     ln1.next = Some(Box::new(ln2));
 
@@ -88,17 +122,17 @@ fn get_input() -> Option<Box<ListNode>> {
 
 fn get_output() -> Option<Box<ListNode>> {
     let mut ln1 = ListNode::new(1);
-    let mut ln2 = ListNode::new(3);    
+    // let mut ln2 = ListNode::new(3);    
     let mut ln3 = ListNode::new(4);
-    let mut ln4 = ListNode::new(1);
-    let mut ln5 = ListNode::new(2);
-    let mut ln6 = ListNode::new(6);
+    // let mut ln4 = ListNode::new(1);
+    // let mut ln5 = ListNode::new(2);
+    // let mut ln6 = ListNode::new(6);
     
-    ln5.next = Some(Box::new(ln6));
-    ln4.next = Some(Box::new(ln5));
-    ln3.next = Some(Box::new(ln4));
-    ln2.next = Some(Box::new(ln3));
-    ln1.next = Some(Box::new(ln2));
+    // ln5.next = Some(Box::new(ln6));
+    // ln4.next = Some(Box::new(ln5));
+    // ln3.next = Some(Box::new(ln4));
+    // ln2.next = Some(Box::new(ln3));
+    ln1.next = Some(Box::new(ln3));
 
     Some(Box::new(ln1))
 }
