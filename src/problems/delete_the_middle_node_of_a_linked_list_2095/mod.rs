@@ -29,8 +29,6 @@ fn sol3(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
     let mut len = 0;
     let mut initial_node: Option<&Box<ListNode>> = head.as_ref();
 
-    println!("initial_node: {:?}", initial_node);
-    
     while let Some(v) = initial_node {
         
         let v: &Option<Box<ListNode>> = &v.next; 
