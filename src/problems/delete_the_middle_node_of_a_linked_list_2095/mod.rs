@@ -20,13 +20,13 @@ impl ListNode {
   }
 }
 
-fn sol3(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+fn sol1(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
 
     if let None = head {
         return None
     }
     
-    let mut len = 0;
+    let mut len = 1;
     let mut initial_node: Option<&Box<ListNode>> = head.as_ref();
 
     while let Some(v) = initial_node {
@@ -55,6 +55,9 @@ fn sol3(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
     while count < half {
         if let Some(v) = prev {
             prev = &mut v.next; 
+            count += 1;
+        } else {
+            break;
         }
     }
     
@@ -85,9 +88,7 @@ fn sol3(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
         }
     };
     
-
-
-    prev.take()
+    head
 }
 
 struct Solution;
@@ -95,7 +96,7 @@ struct Solution;
 impl Solution {
     pub fn delete_middle(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
         // sol1(head)
-        sol3(head)
+        sol1(head)
     }
 }
 
@@ -103,34 +104,35 @@ fn get_input() -> Option<Box<ListNode>> {
     let mut ln1 = ListNode::new(1);
     let mut ln2 = ListNode::new(3);
     let mut ln3 = ListNode::new(4);
-    // let mut ln4 = ListNode::new(7);
-    // let mut ln5 = ListNode::new(1);
-    // let mut ln6 = ListNode::new(2);
-    // let mut ln7 = ListNode::new(6);
+    let mut ln4 = ListNode::new(7);
+    let mut ln5 = ListNode::new(1);
+    let mut ln6 = ListNode::new(2);
+    let mut ln7 = ListNode::new(6);
     
-    // ln6.next = Some(Box::new(ln7));
-    // ln5.next = Some(Box::new(ln6));
-    // ln4.next = Some(Box::new(ln5));
-    // ln3.next = Some(Box::new(ln4));
+    ln6.next = Some(Box::new(ln7));
+    ln5.next = Some(Box::new(ln6));
+    ln4.next = Some(Box::new(ln5));
+    ln3.next = Some(Box::new(ln4));
     ln2.next = Some(Box::new(ln3));
     ln1.next = Some(Box::new(ln2));
 
     Some(Box::new(ln1))
 }
 
+
 fn get_output() -> Option<Box<ListNode>> {
     let mut ln1 = ListNode::new(1);
-    // let mut ln2 = ListNode::new(3);    
+    let mut ln2 = ListNode::new(3);    
     let mut ln3 = ListNode::new(4);
-    // let mut ln4 = ListNode::new(1);
-    // let mut ln5 = ListNode::new(2);
-    // let mut ln6 = ListNode::new(6);
+    let mut ln4 = ListNode::new(1);
+    let mut ln5 = ListNode::new(2);
+    let mut ln6 = ListNode::new(6);
     
-    // ln5.next = Some(Box::new(ln6));
-    // ln4.next = Some(Box::new(ln5));
-    // ln3.next = Some(Box::new(ln4));
-    // ln2.next = Some(Box::new(ln3));
-    ln1.next = Some(Box::new(ln3));
+    ln5.next = Some(Box::new(ln6));
+    ln4.next = Some(Box::new(ln5));
+    ln3.next = Some(Box::new(ln4));
+    ln2.next = Some(Box::new(ln3));
+    ln1.next = Some(Box::new(ln2));
 
     Some(Box::new(ln1))
 }
