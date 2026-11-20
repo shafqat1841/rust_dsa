@@ -41,7 +41,7 @@ fn sol1(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
         }
         
 
-    }
+    } // time= n , space = 1 
     
 
     let half = len / 2;
@@ -59,7 +59,7 @@ fn sol1(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
         } else {
             break;
         }
-    }
+    } // time= 1/2 n , space = 1
     
     let mut mid: Option<&mut Box<ListNode>> = match prev.as_mut() {
         None => {
@@ -90,13 +90,39 @@ fn sol1(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
     
     head
 }
+// total time= n + 1/2 n => n, space = 1
+
+fn sol2(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+
+    let mut len = 0;
+
+    let mut current: &Option<Box<ListNode>> = &head;
+
+    while let Some(node) = current {
+        len += 1;
+        current = &node.next;
+    }
+
+    let half = len / 2;
+
+    let mut current: &mut Option<Box<ListNode>>  = &mut head;
+
+    for _ in 0..half {
+        current = &mut current.as_mut()?.next;
+    }
+
+    let mut mid = current.take()?;
+    *current = mid.next.take();
+
+    head
+}
 
 struct Solution;
 
 impl Solution {
     pub fn delete_middle(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
         // sol1(head)
-        sol1(head)
+        sol2(head)
     }
 }
 
